@@ -5,6 +5,11 @@
   "require": {
     "laravel/framework": "^11.0 || ^12.0"
   },
+  "autoload": {
+    "psr-4": {
+        "SweetAlert2\\Laravel\\": "src/"
+    }
+  },
   "extra": {
     "laravel": {
       "providers": [
