@@ -1,4 +1,4 @@
-# Installation
+## Installation
 
 ```sh
 # 1. Install the sweetalert2 npm package
@@ -11,7 +11,7 @@ composer require sweetalert2/laravel
 php artisan vendor:publish --provider="SweetAlert2\Laravel\ServiceProvider"
 ```
 
-# Usage
+## Usage
 
 Include the SweetAlert2 template in your layout file (usually `resources/views/layouts/app.blade.php`):
 
