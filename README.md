@@ -19,7 +19,7 @@ Include the SweetAlert2 template in your layout file (usually `resources/views/l
 @include('vendor.sweetalert2')
 ```
 
-And the last step is to tell Laravel to show the actual alert:
+And the last step is to tell Laravel to show the actual alert by using the `Swal::fire()` method anywhere in your application:
 
 ```php
 use SweetAlert2\Laravel\Swal;
@@ -32,4 +32,30 @@ Swal::fire([
 ]);
 ```
 
+The full list of options can be found in the [SweetAlert2 documentation](https://sweetalert2.github.io/#configuration).
+
 ![SweetAlert2 Laravel](sweetalert2-laravel.png)
+
+## FAQ
+
+### 1. What's the difference with https://github.com/realrashid/sweet-alert package?
+
+The `realrashid/sweet-alert` package is too opinionated and too complex (facade, midddleware, whatnot 🤯). This package is simple, straightforward, and unopinionated. It's API is aimed to be as close as possible to the original [sweetalert2](https://sweetalert2.github.io/#configuration).
+
+It simply provides a way to use SweetAlert2 in your Laravel application without touching JS or CSS files.
+
+### 2. How it works?
+
+Simple and straightforward:
+
+- The `Swal::fire()` method will pass the options to the [flashed session](https://laravel.com/docs/12.x/session#flash-data).
+- The `'vendor.sweetalert2'` blade template will check if there are any flashed session data and will render the SweetAlert2.
+
+### 3. Any limitations?
+
+SweetAlert2 is a JavaScript package and some of its options are JS callbacks. It's not possible to use them in the `Swal::fire()` method.
+If you need to use JS callbacks, you have to go to JS and use the SweetAlert2 API directly.
+
+### 4. Can I use SweetAlert2 without this package?
+
+Yes, you can use SweetAlert2 without this package. Just `npm install sweetalert2` and use the SweetAlert2 API directly in your JS files.
