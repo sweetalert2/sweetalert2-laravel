@@ -2,9 +2,7 @@
 
 namespace SweetAlert2\Laravel;
 
-use Illuminate\Support\ServiceProvider;
-
-class SweetAlertServiceProvider extends ServiceProvider
+class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
     /**
      * Bootstrap the package services.
