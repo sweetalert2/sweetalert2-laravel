@@ -6,4 +6,7 @@ npm install sweetalert2
 
 # 2. Install the sweetalert2 Laravel composer package
 composer require sweetalert2/laravel
+
+# 3. Publish the assets
+php artisan vendor:publish --provider="SweetAlert2\Laravel\ServiceProvider"
 ```
