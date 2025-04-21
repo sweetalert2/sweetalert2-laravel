@@ -8,7 +8,7 @@ npm install sweetalert2
 composer require sweetalert2/laravel
 
 # 3. Publish the assets
-php artisan vendor:publish --provider="SweetAlert2\Laravel\ServiceProvider"
+php artisan vendor:publish --provider="SweetAlert2\Laravel\ServiceProvider" --force
 ```
 
 ## Usage
@@ -18,3 +18,16 @@ Include the SweetAlert2 template in your layout file (usually `resources/views/l
 ```html
 @include('vendor.sweetalert2')
 ```
+
+And the last step is to tell Laravel to show the actual alert:
+
+```php
+return view('welcome')->withSwal([
+    'title' => 'Welcome to Laravel',
+    'text' => 'This is a simple alert using SweetAlert2',
+    'icon' => 'success',
+    'confirmButtonText' => 'Cool'
+]);
+```
+
+![SweetAlert2 Laravel](sweetalert2-laravel.png)
