@@ -1,25 +1,31 @@
 ## Installation
 
+1. Install the sweetalert2 npm and composer packages
+
 ```sh
-# 1. Install the sweetalert2 npm package
 npm install sweetalert2
-
-# 2. Install the sweetalert2 Laravel composer package
 composer require sweetalert2/laravel
+```
 
-# 3. Publish the assets
-php artisan vendor:publish --tag=sweetalert2 --force
+2. Add global `window.Swal` to your global JS (usually it's `resources/js/app.js` file):
+
+```js
+import Swal from 'sweetalert2'
+
+window.Swal = Swal
+```
+
+3. Include the SweetAlert2 template in your layout file (usually `resources/views/layouts/app.blade.php`):
+
+```blade
+@if (session()->has('sweetalert2'))
+  <script type="module">
+    Swal.fire(@json(session('sweetalert2')));
+  </script>
+@endif
 ```
 
 ## Usage
-
-Include the SweetAlert2 template in your layout file (usually `resources/views/layouts/app.blade.php`):
-
-```blade
-@include('vendor.sweetalert2')
-```
-
-And the last step is to tell Laravel to show the actual alert by using the `Swal::fire()` method anywhere in your application:
 
 ```php
 use SweetAlert2\Laravel\Swal;

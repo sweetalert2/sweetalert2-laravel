@@ -9,12 +9,5 @@
     "psr-4": {
         "SweetAlert2\\Laravel\\": "src/"
     }
-  },
-  "extra": {
-    "laravel": {
-      "providers": [
-          "SweetAlert2\\Laravel\\ServiceProvider"
-      ]
-    }
   }
 }
