@@ -22,6 +22,8 @@ Include the SweetAlert2 template in your layout file (usually `resources/views/l
 And the last step is to tell Laravel to show the actual alert:
 
 ```php
+use SweetAlert2\Laravel\Swal;
+
 Swal::fire([
     'title' => 'Laravel + SweetAlert2 = <3',
     'text' => 'This is a simple alert using SweetAlert2',
