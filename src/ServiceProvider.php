@@ -10,7 +10,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     public function boot(): void
     {
         $this->publishes([
-            __DIR__.'/../resources/views' => resource_path('views/vendor/sweetalert2'),
+            __DIR__.'/../resources/views' => resource_path('views/vendor/'),
         ]);
     }
 }
