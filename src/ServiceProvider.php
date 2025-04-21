@@ -14,15 +14,4 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             __DIR__.'/../resources/js' => resource_path('js/vendor/'),
         ], 'sweetalert2');
     }
-
-    /**
-     * Register the package facade.
-     */
-    public function register(): void
-    {
-        $this->app->singleton('sweetalert2', function ($app) {
-            return $this->app->make(Swal::class);
-        });
-    }
-
 }
