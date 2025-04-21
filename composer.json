@@ -1,0 +1,8 @@
+{
+  "name": "sweetalert2/laravel",
+  "description": "Official SweetAlert2 integration for Laravel framework",
+  "license": "MIT",
+  "require": {
+    "laravel/framework": "^11.0 || ^12.0"
+  }
+}
