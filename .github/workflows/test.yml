@@ -1,0 +1,42 @@
+name: Tests
+
+on:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Make a new Laravel project
+        run: |
+          composer global require laravel/installer
+          ~/.composer/vendor/bin/laravel new sweetalert2-laravel-test --pest --no-interaction
+
+      - name: Install sweetalert2/laravel package
+        run: |
+          cd sweetalert2-laravel-test
+          composer require sweetalert2/laravel
+          php artisan vendor:publish --tag=sweetalert2 --force
+          npm install
+          npm run build
+          cat public/build/manifest.json
+
+      - name: Integrate sweetalert2/laravel into the project
+        run: |
+          cd sweetalert2-laravel-test
+          sed -i "s|</body>|@include('vendor.sweetalert2')</body>|" resources/views/welcome.blade.php
+          npm install
+          npm run build
+          cat public/build/manifest.json
+
+      - name: Copy local tests to the project and run them
+        run: |
+          cd sweetalert2-laravel-test
+          cp ../tests/SwalTest.php tests/Feature
+          rm tests/Feature/ExampleTest.php tests/Unit/ExampleTest.php
+          cat public/build/manifest.json
+          ./vendor/bin/pest
