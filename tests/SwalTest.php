@@ -2,7 +2,7 @@
 
 use SweetAlert2\Laravel\Swal;
 
-test('the application returns a successful response', function () {
+test('Swal::fire() should work', function () {
     Swal::fire([
         'title' => 'SweetAlert2 + Laravel = <3',
         'text' => 'This is a simple alert using SweetAlert2',
@@ -14,6 +14,5 @@ test('the application returns a successful response', function () {
 
     $response
         ->assertStatus(200)
-        ->assertSee('resources/js/vendor/sweetalert2.js', escape: false)
-        ->assertSee('Swal.fire({"title":"SweetAlert2 + Laravel = \u003C3","text":"This is a simple alert using SweetAlert2","icon":"success","confirmButtonText":"Cool"});', escape: false);
+        ->assertSee('<script type=\'module\'>Swal.fire({"title":"SweetAlert2 + Laravel = \u003C3","text":"This is a simple alert using SweetAlert2","icon":"success","confirmButtonText":"Cool"})</script>', escape: false);
 });
