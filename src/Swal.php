@@ -2,15 +2,13 @@
 
 namespace SweetAlert2\Laravel;
 
-use Illuminate\Support\Facades\Facade;
-
-/**
- * @method static \SweetAlert2\Laravel\Swal fire(array $options = [])
- */
-class Swal extends Facade
+class Swal
 {
-    protected static function getFacadeAccessor(): string
+    /**
+     * @param  array{title?: string, html?: string, icon?: string, confirmButtonText?: string}  $options
+     */
+    public static function fire(array $options = []): void
     {
-        return 'sweetalert2';
+        session()->flash('sweetalert2', $options);
     }
 }

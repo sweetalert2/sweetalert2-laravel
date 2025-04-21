@@ -21,7 +21,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     public function register(): void
     {
         $this->app->singleton('sweetalert2', function ($app) {
-            return $this->app->make(SweetAlert2::class);
+            return $this->app->make(Swal::class);
         });
     }
 
