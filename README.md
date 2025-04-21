@@ -55,7 +55,7 @@ It simply provides a way to use SweetAlert2 in your Laravel application without 
 Simple and straightforward:
 
 - The `Swal::fire()` method will pass the options to the [flashed session](https://laravel.com/docs/12.x/session#flash-data).
-- The `'vendor.sweetalert2'` blade template will check if there are any flashed session data and will render the SweetAlert2.
+- The blade partial template will check if there are any flashed session data and will render the SweetAlert2.
 
 ### 3. Any limitations?
 
