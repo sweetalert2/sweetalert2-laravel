@@ -4,5 +4,15 @@
   "license": "MIT",
   "require": {
     "laravel/framework": "^11.0 || ^12.0"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+          "SweetAlert2\\Laravel\\ServiceProvider"
+      ],
+      "aliases": {
+        "Swal": "SweetAlert2\\Laravel\\Facade"
+      }
+    }
   }
 }
