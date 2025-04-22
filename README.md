@@ -7,7 +7,13 @@ npm install sweetalert2
 composer require sweetalert2/laravel
 ```
 
-2. Add global `window.Swal` to your global JS (usually it's `resources/js/app.js` file):
+2. Publish the package assets
+
+```sh
+php artisan vendor:publish --tag=sweetalert2
+```
+
+3. Add global `window.Swal` to your global JS (usually it's `resources/js/app.js` file):
 
 ```js
 import Swal from 'sweetalert2'
@@ -15,14 +21,10 @@ import Swal from 'sweetalert2'
 window.Swal = Swal
 ```
 
-3. Include the SweetAlert2 template in your layout file (usually `resources/views/layouts/app.blade.php`):
+4. Include the SweetAlert2 template in your layout file (usually `resources/views/layouts/app.blade.php`):
 
 ```blade
-@if (session()->has('sweetalert2'))
-  <script type="module">
-    Swal.fire(@json(session('sweetalert2')))
-  </script>
-@endif
+@include('vendor.sweetalert2.index')
 ```
 
 ## Usage
@@ -44,9 +46,11 @@ The full list of options can be found in the [SweetAlert2 documentation](https:/
 
 ## FAQ
 
-### 1. What's the difference with https://github.com/realrashid/sweet-alert package?
+### 1. What's the difference with [realrashid/sweet-alert](https://github.com/realrashid/sweet-alert) package?
 
-The `realrashid/sweet-alert` package is too opinionated and too complex (facade, midddleware, whatnot 🤯). This package is simple, straightforward, and unopinionated. It's API is aimed to be as close as possible to the original [sweetalert2](https://sweetalert2.github.io/#configuration).
+The `realrashid/sweet-alert` package is too opinionated and too complex: facade, midddleware, whatnot 🤯. And all that with 0 tests.
+
+This package is simple, straightforward, and unopinionated. It's API is aimed to be as close as possible to the original [sweetalert2](https://sweetalert2.github.io/#configuration).
 
 It simply provides a way to use SweetAlert2 in your Laravel application without touching JS or CSS files.
 
