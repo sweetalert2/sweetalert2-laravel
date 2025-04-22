@@ -19,7 +19,6 @@ jobs:
       - name: Install sweetalert2/laravel package
         run: |
           cd sweetalert2-laravel-test
-          npm install sweetalert2
           composer require sweetalert2/laravel
 
       - name: Integrate sweetalert2/laravel into the project (follow the README's instructions)
