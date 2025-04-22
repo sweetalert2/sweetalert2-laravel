@@ -17,11 +17,34 @@ You can now run `Swal::fire()` anywhere in your Laravel application (controllers
 ```php
 use SweetAlert2\Laravel\Swal;
 
+// same as `Swal.fire()` in JS, same options: https://sweetalert2.github.io/#configuration
 Swal::fire([
     'title' => 'Laravel + SweetAlert2 = <3',
     'text' => 'This is a simple alert using SweetAlert2',
     'icon' => 'success',
     'confirmButtonText' => 'Cool'
+]);
+
+// or with a custom icon
+Swal::success([
+    'title' => 'Popup with a success icon',
+]);
+Swal::error([
+    'title' => 'Popup with an error icon',
+]);
+Swal::warning([
+    'title' => 'Popup with a warning icon',
+]);
+Swal::info([
+    'title' => 'Popup with an info icon',
+]);
+Swal::question([
+    'title' => 'Popup with a question icon',
+]);
+
+// or toast
+Swal::toast([
+    'title' => 'Laravel + SweetAlert2 = <3',
 ]);
 ```
 
