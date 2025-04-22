@@ -3,19 +3,10 @@
 1. Install the sweetalert2 npm and composer packages
 
 ```sh
-npm install sweetalert2
 composer require sweetalert2/laravel
 ```
 
-2. Add global `window.Swal` to your global JS (usually it's `resources/js/app.js` file):
-
-```js
-import Swal from 'sweetalert2'
-
-window.Swal = Swal
-```
-
-3. Include the SweetAlert2 template in your layout file (usually `resources/views/layouts/app.blade.php`):
+2. Include the SweetAlert2 template in your layout file (usually `resources/views/layouts/app.blade.php`):
 
 ```blade
 @include('sweetalert2::index')
@@ -59,7 +50,3 @@ Simple and straightforward:
 
 SweetAlert2 is a JavaScript package and some of its options are JS callbacks. It's not possible to use them in the `Swal::fire()` method.
 If you need to use JS callbacks, you have to go to JS and use the SweetAlert2 API directly.
-
-### 4. Can I use SweetAlert2 without this package?
-
-Yes, you can use SweetAlert2 without this package. Just `npm install sweetalert2` and use the SweetAlert2 API directly in your JS files.

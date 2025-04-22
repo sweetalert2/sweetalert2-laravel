@@ -26,8 +26,6 @@ jobs:
         run: |
           cd sweetalert2-laravel-test
           sed -i "s|</body>|@include('sweetalert2::index')</body>|" resources/views/welcome.blade.php
-          echo "import Swal from 'sweetalert2'" >> resources/js/app.js
-          echo "window.Swal = Swal" >> resources/js/app.js
 
       - name: Copy local tests to the project and run them
         run: |
