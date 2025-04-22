@@ -2,7 +2,7 @@
 
 use SweetAlert2\Laravel\Swal;
 
-test('Swal::fire() should work', function () {
+test('Swal::fire()', function () {
     Swal::fire([
         'title' => 'SweetAlert2 + Laravel = <3',
         'text' => 'This is a simple alert using SweetAlert2',
@@ -16,4 +16,76 @@ test('Swal::fire() should work', function () {
         ->assertStatus(200)
         ->assertSee("import Swal from 'https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.esm.all.min.js'", escape: false)
         ->assertSee('Swal.fire({"title":"SweetAlert2 + Laravel = \u003C3","text":"This is a simple alert using SweetAlert2","icon":"success","confirmButtonText":"Cool"})', escape: false);
+});
+
+test('Swal::success()', function () {
+    Swal::success([
+        'title' => 'success title',
+    ]);
+
+    $response = $this->get('/');
+
+    $response
+        ->assertStatus(200)
+        ->assertSee('Swal.fire({"icon":"success","title":"success title"})', escape: false);
+});
+
+test('Swal::error()', function () {
+    Swal::error([
+        'title' => 'error title',
+    ]);
+
+    $response = $this->get('/');
+
+    $response
+        ->assertStatus(200)
+        ->assertSee('Swal.fire({"icon":"error","title":"error title"})', escape: false);
+});
+
+test('Swal::warning()', function () {
+    Swal::warning([
+        'title' => 'warning title',
+    ]);
+
+    $response = $this->get('/');
+
+    $response
+        ->assertStatus(200)
+        ->assertSee('Swal.fire({"icon":"warning","title":"warning title"})', escape: false);
+});
+
+test('Swal::info()', function () {
+    Swal::info([
+        'title' => 'info title',
+    ]);
+
+    $response = $this->get('/');
+
+    $response
+        ->assertStatus(200)
+        ->assertSee('Swal.fire({"icon":"info","title":"info title"})', escape: false);
+});
+
+test('Swal::question()', function () {
+    Swal::question([
+        'title' => 'question title',
+    ]);
+
+    $response = $this->get('/');
+
+    $response
+        ->assertStatus(200)
+        ->assertSee('Swal.fire({"icon":"question","title":"question title"})', escape: false);
+});
+
+test('Swal::toast()', function () {
+    Swal::toast([
+        'title' => 'toast title',
+    ]);
+
+    $response = $this->get('/');
+
+    $response
+        ->assertStatus(200)
+        ->assertSee('Swal.fire({"toast":true,"title":"toast title"})', escape: false);
 });
