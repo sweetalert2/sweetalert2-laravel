@@ -42,9 +42,26 @@ Swal::question([
     'title' => 'Popup with a question icon',
 ]);
 
-// or toast
+// or a toast
 Swal::toast([
-    'title' => 'Laravel + SweetAlert2 = <3',
+    'title' => 'Toast',
+]);
+
+// or a toast with a custom icon
+Swal::toastSuccess([
+    'title' => 'Toast with a success icon',
+]);
+Swal::toastError([
+    'title' => 'Toast with an error icon',
+]);
+Swal::toastWarning([
+    'title' => 'Toast with a warning icon',
+]);
+Swal::toastInfo([
+    'title' => 'Toast with an info icon',
+]);
+Swal::toastQuestion([
+    'title' => 'Toast with a question icon',
 ]);
 ```
 

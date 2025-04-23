@@ -56,4 +56,49 @@ class Swal
             ...$options,
         ]);
     }
+
+    public static function toastSuccess(array $options = []): void
+    {
+        session()->flash('sweetalert2', [
+            'toast' => true,
+            'icon' => 'success',
+            ...$options,
+        ]);
+    }
+
+    public static function toastError(array $options = []): void
+    {
+        session()->flash('sweetalert2', [
+            'toast' => true,
+            'icon' => 'error',
+            ...$options,
+        ]);
+    }
+
+    public static function toastWarning(array $options = []): void
+    {
+        session()->flash('sweetalert2', [
+            'toast' => true,
+            'icon' => 'warning',
+            ...$options,
+        ]);
+    }
+
+    public static function toastInfo(array $options = []): void
+    {
+        session()->flash('sweetalert2', [
+            'toast' => true,
+            'icon' => 'info',
+            ...$options,
+        ]);
+    }
+
+    public static function toastQuestion(array $options = []): void
+    {
+        session()->flash('sweetalert2', [
+            'toast' => true,
+            'icon' => 'question',
+            ...$options,
+        ]);
+    }
 }
