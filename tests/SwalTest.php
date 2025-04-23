@@ -89,3 +89,63 @@ test('Swal::toast()', function () {
         ->assertStatus(200)
         ->assertSee('Swal.fire({"toast":true,"title":"toast title"})', escape: false);
 });
+
+test('Swal::toastSuccess()', function () {
+    Swal::toastSuccess([
+        'title' => 'toast success title',
+    ]);
+
+    $response = $this->get('/');
+
+    $response
+        ->assertStatus(200)
+        ->assertSee('Swal.fire({"toast":true,"icon":"success","title":"toast success title"})', escape: false);
+});
+
+test('Swal::toastError()', function () {
+    Swal::toastError([
+        'title' => 'toast error title',
+    ]);
+
+    $response = $this->get('/');
+
+    $response
+        ->assertStatus(200)
+        ->assertSee('Swal.fire({"toast":true,"icon":"error","title":"toast error title"})', escape: false);
+});
+
+test('Swal::toastWarning()', function () {
+    Swal::toastWarning([
+        'title' => 'toast warning title',
+    ]);
+
+    $response = $this->get('/');
+
+    $response
+        ->assertStatus(200)
+        ->assertSee('Swal.fire({"toast":true,"icon":"warning","title":"toast warning title"})', escape: false);
+});
+
+test('Swal::toastInfo()', function () {
+    Swal::toastInfo([
+        'title' => 'toast info title',
+    ]);
+
+    $response = $this->get('/');
+
+    $response
+        ->assertStatus(200)
+        ->assertSee('Swal.fire({"toast":true,"icon":"info","title":"toast info title"})', escape: false);
+});
+
+test('Swal::toastQuestion()', function () {
+    Swal::toastQuestion([
+        'title' => 'toast question title',
+    ]);
+
+    $response = $this->get('/');
+
+    $response
+        ->assertStatus(200)
+        ->assertSee('Swal.fire({"toast":true,"icon":"question","title":"toast question title"})', escape: false);
+});
