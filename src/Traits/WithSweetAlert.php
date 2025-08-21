@@ -1,52 +1,59 @@
 <?php declare(strict_types=1);
 
-namespace SweetAlert2\Laravel;
+namespace SweetAlert2\Laravel\Traits;
 
-use SweetAlert2\Laravel\Traits\WithSweetAlert;
+use SweetAlert2\Laravel\Swal;
 
 /**
- * Laravel SweetAlert2 Integration {@see https://github.com/sweetalert2/sweetalert2-laravel}
+ * Laravel & Livewire SweetAlert2 Integration {@see https://github.com/sweetalert2/sweetalert2-laravel}
  *
- * Livewire components can use the trait {@see WithSweetAlert} to dispatch SweetAlert2 events within the component lifecycle.
+ * This trait should be used in a Livewire context to dispatch SweetAlert2 events within the component lifecycle.
+ *
+ * Non Livewire contexts should use the regular Laravel integration {@see Swal}. If this trait is used outside a
+ * Livewire context it will flash the SweetAlert2 event to the session like normal.
  *
  * Example usage:
  * <code>
- *     Swal::fire(['title' => 'Hello World!', 'icon' => 'success']);
+ *     $this->swalFire(['title' => 'Hello World!', 'icon' => 'success']);
  * </code>
  *
  * @package SweetAlert2\Laravel
  * @see https://sweetalert2.github.io
  */
-class Swal
+trait WithSweetAlert
 {
     /**
      * Displays a SweetAlert2 popup.
      *
      * Example usage:
      * <code>
-     *     Swal::fire(['title' => 'Hello World!', 'icon' => 'success']);
+     *     $this->swalFire(['title' => 'Hello World!', 'icon' => 'success']);
      * </code>
      *
      * @param array $options Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
      */
-    public static function fire(array $options = []): void
+    public function swalFire(array $options = []): void
     {
-        session()->flash('sweetalert2', $options);
+        if (method_exists($this, 'dispatch')) {
+            $this->dispatch('sweetalert2', ...$options);
+        } else {
+            session()->flash('sweetalert2', $options);
+        }
     }
 
     /**
      * Displays a SweetAlert2 popup with a success icon.
      *
      * Example usage:
-     * <code>
-     *     Swal::success(['title' => 'Hello World!']);
-     * </code>
+     *  <code>
+     *      $this->swalSuccess(['title' => 'Hello World!']);
+     *  </code>
      *
      * @param array $options Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
      */
-    public static function success(array $options = []): void
+    public function swalSuccess(array $options = []): void
     {
-        self::fire(['icon' => 'success', ...$options]);
+        $this->swalFire(['icon' => 'success', ...$options]);
     }
 
     /**
@@ -54,14 +61,14 @@ class Swal
      *
      * Example usage:
      * <code>
-     *     Swal::error(['title' => 'Hello World!']);
+     *     $this->swalError(['title' => 'Hello World!']);
      * </code>
      *
      * @param array $options Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
      */
-    public static function error(array $options = []): void
+    public function swalError(array $options = []): void
     {
-        self::fire(['icon' => 'error', ...$options]);
+        $this->swalFire(['icon' => 'error', ...$options]);
     }
 
     /**
@@ -69,14 +76,14 @@ class Swal
      *
      * Example usage:
      * <code>
-     *     Swal::warning(['title' => 'Hello World!']);
+     *     $this->swalWarning(['title' => 'Hello World!']);
      * </code>
      *
      * @param array $options Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
      */
-    public static function warning(array $options = []): void
+    public function swalWarning(array $options = []): void
     {
-        self::fire(['icon' => 'warning', ...$options]);
+        $this->swalFire(['icon' => 'warning', ...$options]);
     }
 
     /**
@@ -84,14 +91,14 @@ class Swal
      *
      * Example usage:
      * <code>
-     *     Swal::info(['title' => 'Hello World!']);
+     *     $this->swalInfo(['title' => 'Hello World!']);
      * </code>
      *
      * @param array $options Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
      */
-    public static function info(array $options = []): void
+    public function swalInfo(array $options = []): void
     {
-        self::fire(['icon' => 'info', ...$options]);
+        $this->swalFire(['icon' => 'info', ...$options]);
     }
 
     /**
@@ -99,14 +106,14 @@ class Swal
      *
      * Example usage:
      * <code>
-     *     Swal::question(['title' => 'Hello World!']);
+     *     $this->swalQuestion(['title' => 'Hello World!']);
      * </code>
      *
      * @param array $options Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
      */
-    public static function question(array $options = []): void
+    public function swalQuestion(array $options = []): void
     {
-        self::fire(['icon' => 'question', ...$options]);
+        $this->swalFire(['icon' => 'question', ...$options]);
     }
 
     /* Toast Functions */
@@ -116,14 +123,14 @@ class Swal
      *
      * Example usage:
      * <code>
-     *     Swal::toast(['title' => 'Hello World!', 'icon' => 'success']);
+     *     $this->swalToast(['title' => 'Hello World!', 'icon' => 'success']);
      * </code>
      *
      * @param array $options Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
      */
-    public static function toast(array $options = []): void
+    public function swalToast(array $options = []): void
     {
-        self::fire(['toast' => true, ...$options]);
+        $this->swalFire(['toast' => true, ...$options]);
     }
 
     /**
@@ -131,14 +138,14 @@ class Swal
      *
      * Example usage:
      * <code>
-     *     Swal::toastSuccess(['title' => 'Hello World!']);
+     *     $this->swalToastSuccess(['title' => 'Hello World!']);
      * </code>
      *
      * @param array $options Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
      */
-    public static function toastSuccess(array $options = []): void
+    public function swalToastSuccess(array $options = []): void
     {
-        self::fire(['toast' => true, 'icon' => 'success', ...$options]);
+        $this->swalFire(['toast' => true, 'icon' => 'success', ...$options]);
     }
 
     /**
@@ -146,14 +153,14 @@ class Swal
      *
      * Example usage:
      * <code>
-     *     Swal::toastError(['title' => 'Hello World!']);
+     *     $this->swalToastError(['title' => 'Hello World!']);
      * </code>
      *
      * @param array $options Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
      */
-    public static function toastError(array $options = []): void
+    public function swalToastError(array $options = []): void
     {
-        self::fire(['toast' => true, 'icon' => 'error', ...$options]);
+        $this->swalFire(['toast' => true, 'icon' => 'error', ...$options]);
     }
 
     /**
@@ -161,14 +168,14 @@ class Swal
      *
      * Example usage:
      * <code>
-     *     Swal::toastWarning(['title' => 'Hello World!']);
+     *     $this->swalToastWarning(['title' => 'Hello World!']);
      * </code>
      *
      * @param array $options Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
      */
-    public static function toastWarning(array $options = []): void
+    public function swalToastWarning(array $options = []): void
     {
-        self::fire(['toast' => true, 'icon' => 'warning', ...$options]);
+        $this->swalFire(['toast' => true, 'icon' => 'warning', ...$options]);
     }
 
     /**
@@ -176,14 +183,14 @@ class Swal
      *
      * Example usage:
      * <code>
-     *     Swal::toastInfo(['title' => 'Hello World!']);
+     *     $this->swalToastInfo(['title' => 'Hello World!']);
      * </code>
      *
      * @param array $options Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
      */
-    public static function toastInfo(array $options = []): void
+    public function swalToastInfo(array $options = []): void
     {
-        self::fire(['toast' => true, 'icon' => 'info', ...$options]);
+        $this->swalFire(['toast' => true, 'icon' => 'info', ...$options]);
     }
 
     /**
@@ -191,13 +198,13 @@ class Swal
      *
      * Example usage:
      * <code>
-     *     Swal::toastQuestion(['title' => 'Hello World!']);
+     *     $this->swalToastQuestion(['title' => 'Hello World!']);
      * </code>
      *
      * @param array $options Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
      */
-    public static function toastQuestion(array $options = []): void
+    public function swalToastQuestion(array $options = []): void
     {
-        self::fire(['toast' => true, 'icon' => 'question', ...$options]);
+        $this->swalFire(['toast' => true, 'icon' => 'question', ...$options]);
     }
 }
