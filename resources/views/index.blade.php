@@ -5,8 +5,8 @@
             return window.Swal;
         }
         try {
-            const module = await import('https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.esm.all.min.js');
-            return module.default;
+            const sweetalert2Module = await import('https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.esm.all.min.js')
+            return sweetalert2Module.default;
         } catch (error) {
             return { fire: () => {} };
         }
