@@ -88,7 +88,7 @@ Swal::toastQuestion([
 
 ## Livewire Components
 
-You can now call `$this->swalFire` or any of the available helper methods in your livewire component to show realtime popups and toasts:
+You can now call `$this->swalFire` or any of the available helper methods in your Livewire component to show realtime popups and toasts:
 
 ### LivewireExample.php
 
