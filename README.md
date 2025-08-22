@@ -93,7 +93,8 @@ You can now call `$this->swalFire` or any of the available helper methods in you
 #### LivewireExample.php
 
 ```php
-use SweetAlert2\Laravel\Traits\WithSweetAlert
+use Livewire\Component;
+use SweetAlert2\Laravel\Traits\WithSweetAlert;
 
 class LivewireExample extends Component
 {
