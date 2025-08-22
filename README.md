@@ -5,11 +5,11 @@
 1. Install the package using composer `composer require sweetalert2/laravel`
 2. Include the SweetAlert2 template in your layout file in the body near the closing tag (usually `resources/views/layouts/app.blade.php`):
 
-```bladehtml
+```blade
 @include('sweetalert2::index')
 ```
 
-> #### (Optional) Install the package locally 
+> ### Optional: Use locally installed SweetAlert2 module
 > 1. Install the sweetalert2 package from npm `npm install --save sweetalert2`
 > 2. Add it to app.js `import Swal from 'sweetalert2';`
 > 3. Below the import in app.js, make SweetAlert2 available globally `window.Swal = Swal;`
@@ -90,7 +90,7 @@ Swal::toastQuestion([
 
 You can now call `$this->swalFire` or any of the available helper methods in your livewire component to show realtime popups and toasts:
 
-#### LivewireExample.php
+### LivewireExample.php
 
 ```php
 use Livewire\Component;
@@ -115,8 +115,8 @@ class LivewireExample extends Component
 
 The full list of options can be found in the [SweetAlert2 documentation](https://sweetalert2.github.io/#configuration).
 
-#### livewire-example.blade.php
-```bladehtml
+### livewire-example.blade.php
+```html
 <div>
     <button type="button" wire:click="save">Save</button>
 </div>
@@ -174,7 +174,6 @@ $this->swalToastQuestion([
 ## 1. How is this different from [realrashid/sweet-alert](https://github.com/realrashid/sweet-alert)?
 
 - The `realrashid/sweet-alert` package is too opinionated and too complex: facade, middleware, adding vendor files, whatnot 🤯. And all that with 0 tests.
-
 - This package is simple, straightforward, and unopinionated. Its API is aimed to be as close as possible to the original [sweetalert2](https://sweetalert2.github.io/#configuration). It simply provides a way to use SweetAlert2 in your Laravel or Livewire application without touching JS or CSS files.
 
 ## 2. How does it work?
@@ -189,7 +188,6 @@ Depending on whether you use the Swal class or the WithSweetAlert trait, within 
 ### Livewire components
 
 > #### Realtime
-> 
 > - The `$this->swalFire()` method will dispatch a [Livewire event](https://livewire.laravel.com/docs/events) with the options to the browser window both on the initial request and subsequent update requests.
 > - The blade partial template will listen for the Livewire event and will render the SweetAlert2 popup.
 
@@ -198,11 +196,10 @@ Depending on whether you use the Swal class or the WithSweetAlert trait, within 
 > - The blade partial template will show a popup on the first request, subsequent requests will not show a new popup, this behaviour can instead be achieved by using the realtime implementation above.
 > 
 > This is ideal for showing messages after redirecting the user, for example if they lack permissions to view a page:
-> 
 > ```php
 > public function boot()
 > {
->   if (!Gate::allows('viewAny', Appointments::class)) {
+>   if (Gate::denies('viewAny', Appointments::class)) {
 >       Swal::error([
 >           'title' => 'Unauthorised',
 >           'text' => 'You aren\'t authorised to view appointments!',
