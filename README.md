@@ -190,7 +190,6 @@ Depending on whether you use the Swal class or the WithSweetAlert trait, within 
 > #### Realtime
 > - The `$this->swalFire()` method will dispatch a [Livewire event](https://livewire.laravel.com/docs/events) with the options to the browser window both on the initial request and subsequent update requests.
 > - The blade partial template will listen for the Livewire event and will render the SweetAlert2 popup.
-
 > #### First request or after redirect
 > - The `Swal::fire()` method will pass the options to the [flashed session](https://laravel.com/docs/12.x/session#flash-data)
 > - The blade partial template will show a popup on the first request, subsequent requests will not show a new popup, this behaviour can instead be achieved by using the realtime implementation above.
@@ -201,8 +200,8 @@ Depending on whether you use the Swal class or the WithSweetAlert trait, within 
 > {
 >   if (Gate::denies('viewAny', Appointments::class)) {
 >       Swal::error([
->           'title' => 'Unauthorised',
->           'text' => 'You aren\'t authorised to view appointments!',
+>           'title' => 'Unauthorized',
+>           'text' => 'You aren\'t authorized to view appointments!',
 >           'confirmButtonText' => 'Close'
 >       ]);
 >       return redirect()->route('index');
