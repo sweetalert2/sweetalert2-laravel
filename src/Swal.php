@@ -5,6 +5,8 @@ namespace SweetAlert2\Laravel;
 /**
  * Laravel SweetAlert2 Integration {@see https://github.com/sweetalert2/sweetalert2-laravel}
  *
+ * Livewire components can use the trait {@see WithSweetAlert} to dispatch SweetAlert2 events within the component lifecycle.
+ *
  * Example usage:
  * <code>
  *     Swal::fire(['title' => 'Hello World!', 'icon' => 'success']);
