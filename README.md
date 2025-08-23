@@ -86,7 +86,15 @@ Simple and straightforward:
 - The `Swal::fire()` method will pass the options to the [flashed session](https://laravel.com/docs/12.x/session#flash-data).
 - The blade partial template will check if there are any flashed session data and will render the SweetAlert2 popup.
 
-### 3. Any limitations?
+### 3. How does the SweetAlert2 JavaScript library loading work?
+
+This package uses a smart loading strategy for the SweetAlert2 library:
+
+1. **Check for existing SweetAlert2**: If `window.Swal` is already available, it will use the existing instance.
+
+2. **Dynamic CDN loading**: If SweetAlert2 is not loaded, it will dynamically import it from the official CDN (`https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.esm.all.min.js`).
+
+### 4. Any limitations?
 
 SweetAlert2 is a JavaScript package and some of its options are JS callbacks. It's not possible to use them in the `Swal::fire()` method.
 If you need to use JS callbacks, you have to go to JS and use the SweetAlert2 API directly.
