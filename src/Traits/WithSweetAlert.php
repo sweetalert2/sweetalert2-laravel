@@ -35,9 +35,9 @@ trait WithSweetAlert
     public function swalFire(array $options = []): void
     {
         if ($this instanceof \Livewire\Component) {
-            $this->dispatch('sweetalert2', ...$options);
+            $this->dispatch(Swal::SESSION_KEY, ...$options);
         } else {
-            session()->flash('sweetalert2', $options);
+            Swal::fire($options);
         }
     }
 
