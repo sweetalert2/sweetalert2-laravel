@@ -15,6 +15,7 @@ namespace SweetAlert2\Laravel;
  */
 class Swal
 {
+    private const SESSION_KEY = 'sweetalert2';
     /**
      * Displays a SweetAlert2 popup.
      *
@@ -27,7 +28,7 @@ class Swal
      */
     public static function fire(array $options = []): void
     {
-        session()->flash('sweetalert2', $options);
+        session()->flash(self::SESSION_KEY, $options);
     }
 
     /**
