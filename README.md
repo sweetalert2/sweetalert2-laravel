@@ -180,13 +180,17 @@ Depending on whether you use the Swal class or the WithSweetAlert trait, within 
 ### Livewire components
 
 #### Realtime
-- The `$this->swalFire()` method will dispatch a [Livewire event](https://livewire.laravel.com/docs/events) with the options to the browser window within the current request (this also works on subsequent update requests).
-- The blade partial template will listen for the Livewire event and will render the SweetAlert2 popup.
-#### First request or after redirect
-- The `Swal::fire()` method will pass the options to the [flashed session](https://laravel.com/docs/12.x/session#flash-data)
-- The blade partial template will show a popup on the first request, subsequent update requests will not show a popup, this behaviour can instead be achieved by using the realtime implementation above.
+1. The `$this->swalFire()` method will dispatch a [Livewire event](https://livewire.laravel.com/docs/events) with the options to the browser window within the current request.
+2. The blade partial template will listen for the Livewire event and will render the SweetAlert2 popup.
 
-This is ideal for showing messages after redirecting the user, for example if they lack permissions to view a page:
+This works on the first request and subsequent Livewire update requests.
+#### First request or after redirect
+1. The `Swal::fire()` method will pass the options to the [flashed session](https://laravel.com/docs/12.x/session#flash-data).
+2. The blade partial template will show a popup on the first request.
+
+This works only on the first request, not on Livewire update requests.
+
+This is ideal for showing messages after redirecting the user from a Livewire component, for example if they lack permissions to view a page:
 ```php
 public function boot()
 {
