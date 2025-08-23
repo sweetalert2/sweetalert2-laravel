@@ -174,8 +174,8 @@ Depending on whether you use the Swal class or the WithSweetAlert trait, within 
 
 ### Laravel controllers, middleware, views etc
 
-- The `Swal::fire()` or `$this->swalFire()` method will pass the options to the [flashed session](https://laravel.com/docs/12.x/session#flash-data).
-- The blade partial template will check if there is any flashed session data and will render the SweetAlert2 popup.
+1. The `Swal::fire()` or `$this->swalFire()` method will pass the options to the [flashed session](https://laravel.com/docs/12.x/session#flash-data).
+2. The blade partial template will check if there is any flashed session data and will render the SweetAlert2 popup.
 
 ### Livewire components
 
