@@ -1,32 +1,27 @@
 <script type="module">
-    let Swal;
-    const getSwal = (async () => {
+    const loadSweetAlert2IfNeeded = async () => {
+        // If SweetAlert2 is already loaded, use it
         if (window.Swal) {
             return window.Swal;
         }
+        // Otherwise, dynamically import it from CDN
         try {
-            const sweetalert2Module = await import('https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.esm.all.min.js')
-            return sweetalert2Module.default;
-        } catch (error) {
+            return (await import('https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.esm.all.min.js')).default;
+        }
+            // Fallback in case of an error (e.g., network issues)
+        catch (error) {
+            console.error('Failed to load SweetAlert2:', error);
             return { fire: () => {} };
         }
-    })();
-
-    (async () => {
-        Swal = await getSwal;
-        @session('sweetalert2')
-        const alertOptions = @json($value);
-        if (alertOptions && typeof alertOptions === 'object') {
-            Swal.fire(alertOptions);
-        }
-        @endsession
-    })();
-
+    };
+    const Swal = await loadSweetAlert2IfNeeded();
+    @session('sweetalert2')
+    Swal.fire(@json($value));
+    @endsession
     window.addEventListener('sweetalert2', async (event) => {
         if (!event.detail || typeof event.detail !== 'object') {
             return;
         }
-        Swal = Swal || await getSwal;
         Swal.fire(event.detail);
     });
 </script>
