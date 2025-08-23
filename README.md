@@ -1,7 +1,5 @@
 # Installation
 
----
-
 ```sh
 composer require sweetalert2/laravel
 ```
@@ -13,8 +11,6 @@ Include the SweetAlert2 template in your layout file (usually `resources/views/l
 ```
 
 # Usage
-
----
 
 ## Laravel Controllers, Middleware, Views etc.
 
@@ -80,8 +76,6 @@ Swal::toastQuestion([
 ```
 
 ![SweetAlert2 Laravel](sweetalert2-laravel.png)
-
----
 
 ## Livewire Components
 
@@ -166,8 +160,6 @@ $this->swalToastQuestion([
 
 # FAQ
 
----
-
 ## 1. How is this different to the [realrashid/sweet-alert](https://github.com/realrashid/sweet-alert) package?
 
 The `realrashid/sweet-alert` package is too opinionated and too complex: facade, midddleware, adding vendor files, whatnot 🤯. And all that with 0 tests.
@@ -182,33 +174,32 @@ Depending on whether you use the Swal class or the WithSweetAlert trait, within 
 
 ### Laravel controllers, middleware, views etc
 
-> - The `Swal::fire()` or `$this->swalFire()` method will pass the options to the [flashed session](https://laravel.com/docs/12.x/session#flash-data).
-> - The blade partial template will check if there is any flashed session data and will render the SweetAlert2 popup.
+- The `Swal::fire()` or `$this->swalFire()` method will pass the options to the [flashed session](https://laravel.com/docs/12.x/session#flash-data).
+- The blade partial template will check if there is any flashed session data and will render the SweetAlert2 popup.
 
 ### Livewire components
 
-> #### Realtime
-> - The `$this->swalFire()` method will dispatch a [Livewire event](https://livewire.laravel.com/docs/events) with the options to the browser window within the current request (this also works on subsequent update requests).
-> - The blade partial template will listen for the Livewire event and will render the SweetAlert2 popup.
-> #### First request or after redirect
-> - The `Swal::fire()` method will pass the options to the [flashed session](https://laravel.com/docs/12.x/session#flash-data)
-> - The blade partial template will show a popup on the first request, subsequent update requests will not show a popup, this behaviour can instead be achieved by using the realtime implementation above.
->
-> This is ideal for showing messages after redirecting the user, for example if they lack permissions to view a page:
-> ```php
-> public function boot()
-> {
->   if (Gate::denies('viewAny', Appointments::class)) {
->       Swal::error([
->           'title' => 'Unauthorized',
->           'text' => 'You aren\'t authorized to view appointments!',
->           'confirmButtonText' => 'Close'
->       ]);
->       return redirect()->route('index');
->   }
-> 
-> }
-> ```
+#### Realtime
+- The `$this->swalFire()` method will dispatch a [Livewire event](https://livewire.laravel.com/docs/events) with the options to the browser window within the current request (this also works on subsequent update requests).
+- The blade partial template will listen for the Livewire event and will render the SweetAlert2 popup.
+#### First request or after redirect
+- The `Swal::fire()` method will pass the options to the [flashed session](https://laravel.com/docs/12.x/session#flash-data)
+- The blade partial template will show a popup on the first request, subsequent update requests will not show a popup, this behaviour can instead be achieved by using the realtime implementation above.
+
+This is ideal for showing messages after redirecting the user, for example if they lack permissions to view a page:
+```php
+public function boot()
+{
+  if (Gate::denies('viewAny', Appointments::class)) {
+      Swal::error([
+          'title' => 'Unauthorized',
+          'text' => 'You aren\'t authorized to view appointments!',
+          'confirmButtonText' => 'Close'
+      ]);
+      return redirect()->route('index');
+  }
+}
+```
 
 ## 3. How is the SweetAlert2 JavaScript library loaded?
 
