@@ -42,7 +42,7 @@ class Swal
      */
     public static function success(array $options = []): void
     {
-        self::fire(['icon' => 'success', ...$options]);
+        self::fire([...$options, 'icon' => 'success']);
     }
 
     /**
@@ -57,7 +57,7 @@ class Swal
      */
     public static function error(array $options = []): void
     {
-        self::fire(['icon' => 'error', ...$options]);
+        self::fire([...$options, 'icon' => 'error']);
     }
 
     /**
@@ -72,7 +72,7 @@ class Swal
      */
     public static function warning(array $options = []): void
     {
-        self::fire(['icon' => 'warning', ...$options]);
+        self::fire([...$options, 'icon' => 'warning']);
     }
 
     /**
@@ -87,7 +87,7 @@ class Swal
      */
     public static function info(array $options = []): void
     {
-        self::fire(['icon' => 'info', ...$options]);
+        self::fire([...$options, 'icon' => 'info']);
     }
 
     /**
@@ -102,7 +102,7 @@ class Swal
      */
     public static function question(array $options = []): void
     {
-        self::fire(['icon' => 'question', ...$options]);
+        self::fire([...$options, 'icon' => 'question']);
     }
 
     /* Toast Functions */
@@ -119,7 +119,7 @@ class Swal
      */
     public static function toast(array $options = []): void
     {
-        self::fire(['toast' => true, ...$options]);
+        self::fire([...$options, 'toast' => true]);
     }
 
     /**
@@ -134,7 +134,7 @@ class Swal
      */
     public static function toastSuccess(array $options = []): void
     {
-        self::fire(['toast' => true, 'icon' => 'success', ...$options]);
+        self::fire([...$options, 'toast' => true, 'icon' => 'success']);
     }
 
     /**
@@ -149,7 +149,7 @@ class Swal
      */
     public static function toastError(array $options = []): void
     {
-        self::fire(['toast' => true, 'icon' => 'error', ...$options]);
+        self::fire([...$options, 'toast' => true, 'icon' => 'error']);
     }
 
     /**
@@ -164,7 +164,7 @@ class Swal
      */
     public static function toastWarning(array $options = []): void
     {
-        self::fire(['toast' => true, 'icon' => 'warning', ...$options]);
+        self::fire([...$options, 'toast' => true, 'icon' => 'warning']);
     }
 
     /**
@@ -179,7 +179,7 @@ class Swal
      */
     public static function toastInfo(array $options = []): void
     {
-        self::fire(['toast' => true, 'icon' => 'info', ...$options]);
+        self::fire([...$options, 'toast' => true, 'icon' => 'info']);
     }
 
     /**
@@ -194,6 +194,6 @@ class Swal
      */
     public static function toastQuestion(array $options = []): void
     {
-        self::fire(['toast' => true, 'icon' => 'question', ...$options]);
+        self::fire([...$options, 'toast' => true, 'icon' => 'question']);
     }
 }
