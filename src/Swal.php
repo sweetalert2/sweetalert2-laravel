@@ -2,103 +2,198 @@
 
 namespace SweetAlert2\Laravel;
 
+/**
+ * Laravel SweetAlert2 Integration {@see https://github.com/sweetalert2/sweetalert2-laravel}
+ *
+ * Example usage:
+ * <code>
+ *     Swal::fire(['title' => 'Hello World!', 'icon' => 'success']);
+ * </code>
+ *
+ * @package SweetAlert2\Laravel
+ * @see https://sweetalert2.github.io
+ */
 class Swal
 {
+    /**
+     * Displays a SweetAlert2 popup.
+     *
+     * Example usage:
+     * <code>
+     *     Swal::fire(['title' => 'Hello World!', 'icon' => 'success']);
+     * </code>
+     *
+     * @param array $options Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
+     */
     public static function fire(array $options = []): void
     {
         session()->flash('sweetalert2', $options);
     }
 
+    /**
+     * Displays a SweetAlert2 popup with a success icon.
+     *
+     * Example usage:
+     * <code>
+     *     Swal::success(['title' => 'Hello World!']);
+     * </code>
+     *
+     * @param array $options Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
+     */
     public static function success(array $options = []): void
     {
-        session()->flash('sweetalert2', [
-            'icon' => 'success',
-            ...$options,
-        ]);
+        self::fire(['icon' => 'success', ...$options]);
     }
 
+    /**
+     * Displays a SweetAlert2 popup with an error icon.
+     *
+     * Example usage:
+     * <code>
+     *     Swal::error(['title' => 'Hello World!']);
+     * </code>
+     *
+     * @param array $options Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
+     */
     public static function error(array $options = []): void
     {
-        session()->flash('sweetalert2', [
-            'icon' => 'error',
-            ...$options,
-        ]);
+        self::fire(['icon' => 'error', ...$options]);
     }
 
+    /**
+     * Displays a SweetAlert2 popup with a warning icon.
+     *
+     * Example usage:
+     * <code>
+     *     Swal::warning(['title' => 'Hello World!']);
+     * </code>
+     *
+     * @param array $options Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
+     */
     public static function warning(array $options = []): void
     {
-        session()->flash('sweetalert2', [
-            'icon' => 'warning',
-            ...$options,
-        ]);
+        self::fire(['icon' => 'warning', ...$options]);
     }
 
+    /**
+     * Displays a SweetAlert2 popup with an info icon.
+     *
+     * Example usage:
+     * <code>
+     *     Swal::info(['title' => 'Hello World!']);
+     * </code>
+     *
+     * @param array $options Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
+     */
     public static function info(array $options = []): void
     {
-        session()->flash('sweetalert2', [
-            'icon' => 'info',
-            ...$options,
-        ]);
+        self::fire(['icon' => 'info', ...$options]);
     }
 
+    /**
+     * Displays a SweetAlert2 popup with a question icon.
+     *
+     * Example usage:
+     * <code>
+     *     Swal::question(['title' => 'Hello World!']);
+     * </code>
+     *
+     * @param array $options Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
+     */
     public static function question(array $options = []): void
     {
-        session()->flash('sweetalert2', [
-            'icon' => 'question',
-            ...$options,
-        ]);
+        self::fire(['icon' => 'question', ...$options]);
     }
 
+    /* Toast Functions */
+
+    /**
+     * Displays a SweetAlert2 toast.
+     *
+     * Example usage:
+     * <code>
+     *     Swal::toast(['title' => 'Hello World!', 'icon' => 'success']);
+     * </code>
+     *
+     * @param array $options Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
+     */
     public static function toast(array $options = []): void
     {
-        session()->flash('sweetalert2', [
-            'toast' => true,
-            ...$options,
-        ]);
+        self::fire(['toast' => true, ...$options]);
     }
 
+    /**
+     * Displays a SweetAlert2 toast with a success icon.
+     *
+     * Example usage:
+     * <code>
+     *     Swal::toastSuccess(['title' => 'Hello World!']);
+     * </code>
+     *
+     * @param array $options Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
+     */
     public static function toastSuccess(array $options = []): void
     {
-        session()->flash('sweetalert2', [
-            'toast' => true,
-            'icon' => 'success',
-            ...$options,
-        ]);
+        self::fire(['toast' => true, 'icon' => 'success', ...$options]);
     }
 
+    /**
+     * Displays a SweetAlert2 toast with an error icon.
+     *
+     * Example usage:
+     * <code>
+     *     Swal::toastError(['title' => 'Hello World!']);
+     * </code>
+     *
+     * @param array $options Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
+     */
     public static function toastError(array $options = []): void
     {
-        session()->flash('sweetalert2', [
-            'toast' => true,
-            'icon' => 'error',
-            ...$options,
-        ]);
+        self::fire(['toast' => true, 'icon' => 'error', ...$options]);
     }
 
+    /**
+     * Displays a SweetAlert2 toast with a warning icon.
+     *
+     * Example usage:
+     * <code>
+     *     Swal::toastWarning(['title' => 'Hello World!']);
+     * </code>
+     *
+     * @param array $options Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
+     */
     public static function toastWarning(array $options = []): void
     {
-        session()->flash('sweetalert2', [
-            'toast' => true,
-            'icon' => 'warning',
-            ...$options,
-        ]);
+        self::fire(['toast' => true, 'icon' => 'warning', ...$options]);
     }
 
+    /**
+     * Displays a SweetAlert2 toast with an info icon.
+     *
+     * Example usage:
+     * <code>
+     *     Swal::toastInfo(['title' => 'Hello World!']);
+     * </code>
+     *
+     * @param array $options Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
+     */
     public static function toastInfo(array $options = []): void
     {
-        session()->flash('sweetalert2', [
-            'toast' => true,
-            'icon' => 'info',
-            ...$options,
-        ]);
+        self::fire(['toast' => true, 'icon' => 'info', ...$options]);
     }
 
+    /**
+     * Displays a SweetAlert2 toast with a question icon.
+     *
+     * Example usage:
+     * <code>
+     *     Swal::toastQuestion(['title' => 'Hello World!']);
+     * </code>
+     *
+     * @param array $options Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
+     */
     public static function toastQuestion(array $options = []): void
     {
-        session()->flash('sweetalert2', [
-            'toast' => true,
-            'icon' => 'question',
-            ...$options,
-        ]);
+        self::fire(['toast' => true, 'icon' => 'question', ...$options]);
     }
 }
