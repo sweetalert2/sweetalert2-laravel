@@ -215,5 +215,5 @@ This package uses a smart loading strategy for the SweetAlert2 library:
 
 ## 4. What are the limitations?
 
-SweetAlert2 is a JavaScript package and some of its options are JS callbacks. It's not possible to use them in the `Swal::fire()` method.
+SweetAlert2 is a JavaScript package and some of its options are JS callbacks. It's not possible to use them in the `Swal::fire()` or `$this->swalFire()` methods.
 If you need to use JS callbacks, you have to go to JS and use the SweetAlert2 API directly.
