@@ -10,6 +10,9 @@
         "SweetAlert2\\Laravel\\": "src/"
     }
   },
+  "suggest": {
+    "livewire/livewire": "Required to have the WithSweetAlert trait use Livewire events to show popups on Livewire updates."
+  },
   "extra": {
     "laravel": {
       "providers": [
