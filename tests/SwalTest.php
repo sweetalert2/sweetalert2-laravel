@@ -14,7 +14,7 @@ test('Swal::fire()', function () {
 
     $response
         ->assertStatus(200)
-        ->assertSee("await import('https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.esm.all.min.js')", escape: false)
+        ->assertSee("await import('https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.esm.all.min.js')).default", escape: false)
         ->assertSee('Swal.fire({"title":"SweetAlert2 + Laravel = \u003C3","text":"This is a simple alert using SweetAlert2","icon":"success","confirmButtonText":"Cool"})', escape: false);
 });
 
