@@ -28,7 +28,7 @@
     })();
     @endif
 
-    window.addEventListener({{ Swal::SESSION_KEY }}, async (event) => {
+    window.addEventListener('{{ Swal::SESSION_KEY }}', async (event) => {
         if (!event.detail || typeof event.detail !== 'object') {
             return;
         }
