@@ -27,7 +27,7 @@ test('Swal::success()', function () {
 
     $response
         ->assertStatus(200)
-        ->assertSee('Swal.fire({"icon":"success","title":"success title"})', escape: false);
+        ->assertSee('Swal.fire({"title":"success title","icon":"success"})', escape: false);
 });
 
 test('Swal::error()', function () {
@@ -39,7 +39,7 @@ test('Swal::error()', function () {
 
     $response
         ->assertStatus(200)
-        ->assertSee('Swal.fire({"icon":"error","title":"error title"})', escape: false);
+        ->assertSee('Swal.fire({"title":"error title","icon":"error"})', escape: false);
 });
 
 test('Swal::warning()', function () {
@@ -51,7 +51,7 @@ test('Swal::warning()', function () {
 
     $response
         ->assertStatus(200)
-        ->assertSee('Swal.fire({"icon":"warning","title":"warning title"})', escape: false);
+        ->assertSee('Swal.fire({"title":"warning title","icon":"warning"})', escape: false);
 });
 
 test('Swal::info()', function () {
@@ -63,7 +63,7 @@ test('Swal::info()', function () {
 
     $response
         ->assertStatus(200)
-        ->assertSee('Swal.fire({"icon":"info","title":"info title"})', escape: false);
+        ->assertSee('Swal.fire({"title":"info title","icon":"info"})', escape: false);
 });
 
 test('Swal::question()', function () {
@@ -75,7 +75,7 @@ test('Swal::question()', function () {
 
     $response
         ->assertStatus(200)
-        ->assertSee('Swal.fire({"icon":"question","title":"question title"})', escape: false);
+        ->assertSee('Swal.fire({"title":"question title","icon":"question"})', escape: false);
 });
 
 test('Swal::toast()', function () {
@@ -87,7 +87,7 @@ test('Swal::toast()', function () {
 
     $response
         ->assertStatus(200)
-        ->assertSee('Swal.fire({"toast":true,"title":"toast title"})', escape: false);
+        ->assertSee('Swal.fire({"title":"toast title","toast":true})', escape: false);
 });
 
 test('Swal::toastSuccess()', function () {
@@ -99,7 +99,7 @@ test('Swal::toastSuccess()', function () {
 
     $response
         ->assertStatus(200)
-        ->assertSee('Swal.fire({"toast":true,"icon":"success","title":"toast success title"})', escape: false);
+        ->assertSee('Swal.fire({"title":"toast success title","toast":true,"icon":"success"})', escape: false);
 });
 
 test('Swal::toastError()', function () {
@@ -111,7 +111,7 @@ test('Swal::toastError()', function () {
 
     $response
         ->assertStatus(200)
-        ->assertSee('Swal.fire({"toast":true,"icon":"error","title":"toast error title"})', escape: false);
+        ->assertSee('Swal.fire({"title":"toast error title","toast":true,"icon":"error"})', escape: false);
 });
 
 test('Swal::toastWarning()', function () {
@@ -123,7 +123,7 @@ test('Swal::toastWarning()', function () {
 
     $response
         ->assertStatus(200)
-        ->assertSee('Swal.fire({"toast":true,"icon":"warning","title":"toast warning title"})', escape: false);
+        ->assertSee('Swal.fire({"title":"toast warning title","toast":true,"icon":"warning"})', escape: false);
 });
 
 test('Swal::toastInfo()', function () {
@@ -135,7 +135,7 @@ test('Swal::toastInfo()', function () {
 
     $response
         ->assertStatus(200)
-        ->assertSee('Swal.fire({"toast":true,"icon":"info","title":"toast info title"})', escape: false);
+        ->assertSee('Swal.fire({"title":"toast info title","toast":true,"icon":"info"})', escape: false);
 });
 
 test('Swal::toastQuestion()', function () {
@@ -147,5 +147,5 @@ test('Swal::toastQuestion()', function () {
 
     $response
         ->assertStatus(200)
-        ->assertSee('Swal.fire({"toast":true,"icon":"question","title":"toast question title"})', escape: false);
+        ->assertSee('Swal.fire({"title":"toast question title","toast":true,"icon":"question"})', escape: false);
 });
