@@ -17,7 +17,7 @@ namespace SweetAlert2\Laravel;
  */
 class Swal
 {
-    public const SESSION_KEY = 'sweetalert2';
+    public const SESSION_KEY = 'sweetalert2-message';
     /**
      * Displays a SweetAlert2 popup.
      *
