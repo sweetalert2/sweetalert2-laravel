@@ -90,7 +90,7 @@ use SweetAlert2\Laravel\Traits\WithSweetAlert;
 class LivewireExample extends Component
 {
     use WithSweetAlert;
-    
+
     public function save(): void
     {
         // same as `Swal.fire()` in JS, same options: https://sweetalert2.github.io/#configuration
@@ -109,7 +109,7 @@ The full list of options can be found in the [SweetAlert2 documentation](https:/
 #### livewire-example.blade.php
 ```html
 <div>
-    <button type="button" wire:click="save">Save</button>
+  <button type="button" wire:click="save">Save</button>
 </div>
 ```
 
@@ -180,28 +180,32 @@ Depending on whether you use the Swal class or the WithSweetAlert trait, within 
 ### Livewire components
 
 #### Realtime
+
 1. The `$this->swalFire()` method will dispatch a [Livewire event](https://livewire.laravel.com/docs/events) with the options to the browser window within the current request.
 2. The blade partial template will listen for the Livewire event and will render the SweetAlert2 popup.
 
 This works on the first request and subsequent Livewire update requests.
+
 #### First request or after redirect
+
 1. The `Swal::fire()` method will pass the options to the [flashed session](https://laravel.com/docs/12.x/session#flash-data).
 2. The blade partial template will show a popup on the first request.
 
 This works only on the first request, not on Livewire update requests.
 
 This is ideal for showing messages after redirecting the user from a Livewire component, for example if they lack permissions to view a page:
+
 ```php
 public function boot()
 {
-  if (Gate::denies('viewAny', Appointments::class)) {
-      Swal::error([
-          'title' => 'Unauthorized',
-          'text' => 'You aren\'t authorized to view appointments!',
-          'confirmButtonText' => 'Close'
-      ]);
-      return redirect()->route('index');
-  }
+    if (Gate::denies('viewAny', Appointments::class)) {
+        Swal::error([
+            'title' => 'Unauthorized',
+            'text' => 'You aren\'t authorized to view appointments!',
+            'confirmButtonText' => 'Close'
+        ]);
+        return redirect()->route('index');
+    }
 }
 ```
 
