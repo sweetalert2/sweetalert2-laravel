@@ -16,19 +16,37 @@ jobs:
           composer global require laravel/installer
           ~/.composer/vendor/bin/laravel new sweetalert2-laravel-test --pest --no-interaction
 
-      - name: Install sweetalert2/laravel package
+      - name: Install sweetalert2/laravel package and Livewire
         run: |
           cd sweetalert2-laravel-test
           composer require sweetalert2/laravel
-
-      - name: Integrate sweetalert2/laravel into the project (follow the README's instructions)
-        run: |
-          cd sweetalert2-laravel-test
-          sed -i "s|</body>|@include('sweetalert2::index')</body>|" resources/views/welcome.blade.php
+          composer require livewire/livewire
 
       - name: Copy local tests to the project and run them
         run: |
           cd sweetalert2-laravel-test
-          cp ../tests/SwalTest.php tests/Feature
+          cp ../tests/*Test.php tests/Feature
           rm tests/Feature/ExampleTest.php tests/Unit/ExampleTest.php
+          cp -r ../tests/Livewire app
+          rm -rf resources/views
+          cp -r ../tests/views resources
+
+      - name: Set up browser testing
+        run: |
+          cd sweetalert2-laravel-test
+          composer require pestphp/pest-plugin-browser --dev
+          npm install playwright
+          npx playwright install-deps
+          npx playwright install
+
+      - name: Run tests
+        run: |
+          cd sweetalert2-laravel-test
           ./vendor/bin/pest
+
+      - name: Store screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots
+          path: Tests/Browser/Screenshots
