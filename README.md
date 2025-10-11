@@ -158,6 +158,111 @@ $this->swalToastQuestion([
 ]);
 ```
 
+## Inertia.js
+
+You can use `Swal::fire()` or any of the available helper methods in your Inertia.js controllers to show popups after navigation:
+
+### Setup
+
+First, add the middleware to share flash data with Inertia:
+
+#### app/Http/Kernel.php (Laravel 10) or bootstrap/app.php (Laravel 11+)
+
+```php
+// Laravel 10
+protected $middlewareGroups = [
+    'web' => [
+        // ...
+        \SweetAlert2\Laravel\Middleware\ShareInertiaFlashData::class,
+    ],
+];
+
+// Laravel 11+
+->withMiddleware(function (Middleware $middleware) {
+    $middleware->web(append: [
+        \SweetAlert2\Laravel\Middleware\ShareInertiaFlashData::class,
+    ]);
+})
+```
+
+Then include the SweetAlert2 template in your Inertia app layout (usually `resources/views/app.blade.php` or similar):
+
+```blade
+@include('sweetalert2::index')
+```
+
+### Usage
+
+#### InertiaController.php
+
+```php
+use SweetAlert2\Laravel\Swal;
+use Inertia\Inertia;
+
+class InertiaController extends Controller
+{
+    public function store()
+    {
+        // Your logic here...
+
+        // Show SweetAlert2 popup after redirect
+        Swal::success([
+            'title' => 'Saved!',
+            'text' => 'Your data has been saved successfully.',
+        ]);
+
+        return redirect()->route('dashboard');
+    }
+}
+```
+
+The full list of options can be found in the [SweetAlert2 documentation](https://sweetalert2.github.io/#configuration).
+
+### Helpers
+
+Available Inertia helper methods (same as Laravel helpers):
+
+```php
+// with a custom icon
+Swal::success([
+    'title' => 'Popup with a success icon',
+]);
+Swal::error([
+    'title' => 'Popup with an error icon',
+]);
+Swal::warning([
+    'title' => 'Popup with a warning icon',
+]);
+Swal::info([
+    'title' => 'Popup with an info icon',
+]);
+Swal::question([
+    'title' => 'Popup with a question icon',
+]);
+
+// or a toast
+Swal::toast([
+    'title' => 'Toast',
+]);
+
+// or a toast with a custom icon
+Swal::toastSuccess([
+    'title' => 'Toast with a success icon',
+]);
+Swal::toastError([
+    'title' => 'Toast with an error icon',
+]);
+Swal::toastWarning([
+    'title' => 'Toast with a warning icon',
+]);
+Swal::toastInfo([
+    'title' => 'Toast with an info icon',
+]);
+Swal::toastQuestion([
+    'title' => 'Toast with a question icon',
+]);
+```
+
 # FAQ
 
 ## 1. How is this different to the [realrashid/sweet-alert](https://github.com/realrashid/sweet-alert) package?
@@ -166,11 +271,11 @@ The `realrashid/sweet-alert` package is too opinionated and too complex: facade,
 
 This package is simple, straightforward, and unopinionated. Its API is aimed to be as close as possible to the original [sweetalert2](https://sweetalert2.github.io/#configuration).
 
-It simply provides a way to use SweetAlert2 in your Laravel or Livewire application without touching JS or CSS files.
+It simply provides a way to use SweetAlert2 in your Laravel, Livewire, or Inertia.js application without touching JS or CSS files.
 
 ## 2. How does it work?
 
-Depending on whether you use the Swal class or the WithSweetAlert trait, within either a Laravel only or Livewire context, the behaviour is slightly different.
+Depending on whether you use the Swal class or the WithSweetAlert trait, within either a Laravel only, Livewire, or Inertia.js context, the behaviour is slightly different.
 
 ### Laravel controllers, middleware, views etc
 
@@ -208,6 +313,14 @@ public function boot()
     }
 }
 ```
+
+### Inertia.js
+
+1. The `Swal::fire()` method will pass the options to the [flashed session](https://laravel.com/docs/12.x/session#flash-data).
+2. The middleware shares the flash data with Inertia via shared props.
+3. The blade partial template listens for Inertia navigation events and renders the SweetAlert2 popup.
+
+This works after Inertia page navigations (redirects, visits, etc.).
 
 ## 3. How is the SweetAlert2 JavaScript library loaded?
 
