@@ -164,7 +164,11 @@ You can use `Swal::fire()` or any of the available helper methods in your Inerti
 
 ### Setup
 
-First, add the middleware to share flash data with Inertia:
+You have two options to share the flash data with Inertia:
+
+**Option 1: Using the provided middleware (easiest)**
+
+Add the middleware to share flash data with Inertia:
 
 #### app/Http/Kernel.php (Laravel 10) or bootstrap/app.php (Laravel 11+)
 
@@ -183,6 +187,23 @@ protected $middlewareGroups = [
         \SweetAlert2\Laravel\Middleware\ShareInertiaFlashData::class,
     ]);
 })
+```
+
+**Option 2: Modify your existing HandleInertiaRequests middleware**
+
+If you already have a `HandleInertiaRequests` middleware, add the SweetAlert2 flash data to the shared data:
+
+```php
+use SweetAlert2\Laravel\Swal;
+
+public function share(Request $request): array
+{
+    return array_merge(parent::share($request), [
+        'flash' => [
+            Swal::SESSION_KEY => fn () => $request->session()->get(Swal::SESSION_KEY),
+        ],
+    ]);
+}
 ```
 
 Then include the SweetAlert2 template in your Inertia app layout (usually `resources/views/app.blade.php` or similar):

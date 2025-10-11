@@ -23,11 +23,9 @@ class ShareInertiaFlashData
     public function handle(Request $request, Closure $next): mixed
     {
         Inertia::share([
-            'flash' => function () {
-                return [
-                    Swal::SESSION_KEY => session(Swal::SESSION_KEY),
-                ];
-            },
+            'flash' => fn () => array_filter([
+                Swal::SESSION_KEY => session(Swal::SESSION_KEY),
+            ]),
         ]);
 
         return $next($request);
