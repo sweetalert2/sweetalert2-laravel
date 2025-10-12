@@ -16,6 +16,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     {
         if (class_exists(\Livewire\Livewire::class)) {
             $this->loadViewsFrom(__DIR__.'/../resources/views/livewire', 'sweetalert2');
+        } elseif (class_exists(\Inertia\Inertia::class)) {
+            $this->loadViewsFrom(__DIR__.'/../resources/views/inertia', 'sweetalert2');
         } else {
             $this->loadViewsFrom(__DIR__.'/../resources/views/laravel', 'sweetalert2');
         }

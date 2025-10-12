@@ -11,7 +11,8 @@
     }
   },
   "suggest": {
-    "livewire/livewire": "Required to have the WithSweetAlert trait use Livewire events to show popups on Livewire updates."
+    "livewire/livewire": "Required to have the WithSweetAlert trait use Livewire events to show popups on Livewire updates.",
+    "inertiajs/inertia-laravel": "Required to use SweetAlert2 with Inertia.js shared flash data."
   },
   "extra": {
     "laravel": {
