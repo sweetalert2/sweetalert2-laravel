@@ -164,34 +164,7 @@ You can use `Swal::fire()` or any of the available helper methods in your Inerti
 
 ### Setup
 
-You have two options to share the flash data with Inertia:
-
-**Option 1: Using the provided middleware (easiest)**
-
-Add the middleware to share flash data with Inertia:
-
-#### app/Http/Kernel.php (Laravel 10) or bootstrap/app.php (Laravel 11+)
-
-```php
-// Laravel 10
-protected $middlewareGroups = [
-    'web' => [
-        // ...
-        \SweetAlert2\Laravel\Middleware\ShareInertiaFlashData::class,
-    ],
-];
-
-// Laravel 11+
-->withMiddleware(function (Middleware $middleware) {
-    $middleware->web(append: [
-        \SweetAlert2\Laravel\Middleware\ShareInertiaFlashData::class,
-    ]);
-})
-```
-
-**Option 2: Modify your existing HandleInertiaRequests middleware**
-
-If you already have a `HandleInertiaRequests` middleware, add the SweetAlert2 flash data to the shared data:
+First, add the SweetAlert2 flash data to your `HandleInertiaRequests` middleware:
 
 ```php
 use SweetAlert2\Laravel\Swal;
@@ -338,7 +311,7 @@ public function boot()
 ### Inertia.js
 
 1. The `Swal::fire()` method will pass the options to the [flashed session](https://laravel.com/docs/12.x/session#flash-data).
-2. The middleware shares the flash data with Inertia via shared props.
+2. The `HandleInertiaRequests` middleware shares the flash data with Inertia via shared props.
 3. The blade partial template listens for Inertia navigation events and renders the SweetAlert2 popup.
 
 This works after Inertia page navigations (redirects, visits, etc.).
