@@ -22,7 +22,7 @@
 
     (async () => {
       Swal = await getSweetAlert2();
-      Swal.fire(@json(session(Swal::SESSION_KEY)));
+      Swal.fire(@json(session()->pull(Swal::SESSION_KEY)));
     })();
   </script>
 @endif
