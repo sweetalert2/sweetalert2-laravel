@@ -30,7 +30,7 @@ class Swal
      */
     public static function fire(array $options = []): void
     {
-        session()->flash(self::SESSION_KEY, $options);
+        session()->put(self::SESSION_KEY, $options);
     }
 
     /**
