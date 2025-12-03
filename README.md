@@ -173,7 +173,7 @@ public function share(Request $request): array
 {
     return array_merge(parent::share($request), [
         'flash' => [
-            Swal::SESSION_KEY => fn () => $request->session()->get(Swal::SESSION_KEY),
+            Swal::SESSION_KEY => fn () => $request->session()->pull(Swal::SESSION_KEY),
         ],
     ]);
 }
@@ -273,8 +273,8 @@ Depending on whether you use the Swal class or the WithSweetAlert trait, within 
 
 ### Laravel controllers, middleware, views etc
 
-1. The `Swal::fire()` or `$this->swalFire()` method will pass the options to the [flashed session](https://laravel.com/docs/12.x/session#flash-data).
-2. The blade partial template will check if there is any flashed session data and will render the SweetAlert2 popup.
+1. The `Swal::fire()` method will pass the options to the session using `session()->put()`.
+2. The blade partial template will check if there is any session data and will render the SweetAlert2 popup, removing the data with `session()->pull()` after displaying it.
 
 ### Livewire components
 
@@ -287,10 +287,10 @@ This works on the first request and subsequent Livewire update requests.
 
 #### First request or after redirect
 
-1. The `Swal::fire()` method will pass the options to the [flashed session](https://laravel.com/docs/12.x/session#flash-data).
-2. The blade partial template will show a popup on the first request.
+1. The `Swal::fire()` method will pass the options to the session using `session()->put()`.
+2. The blade partial template will show a popup on the initial page render, removing the data with `session()->pull()` after displaying it.
 
-This works only on the first request, not on Livewire update requests.
+This works across multiple requests (including lazy-loaded components) until the alert is displayed.
 
 This is ideal for showing messages after redirecting the user from a Livewire component, for example if they lack permissions to view a page:
 
@@ -310,8 +310,8 @@ public function boot()
 
 ### Inertia.js
 
-1. The `Swal::fire()` method will pass the options to the [flashed session](https://laravel.com/docs/12.x/session#flash-data).
-2. The `HandleInertiaRequests` middleware shares the flash data with Inertia via shared props.
+1. The `Swal::fire()` method will pass the options to the session using `session()->put()`.
+2. The `HandleInertiaRequests` middleware shares the session data with Inertia via shared props, removing it with `session()->pull()`.
 3. The blade partial template listens for Inertia navigation events and renders the SweetAlert2 popup.
 
 This works after Inertia page navigations (redirects, visits, etc.).
