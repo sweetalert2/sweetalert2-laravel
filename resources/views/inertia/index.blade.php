@@ -20,9 +20,9 @@
   };
 
   // Listen to Inertia navigation events
-  document.addEventListener('inertia:finish', async (event) => {
+  document.addEventListener('inertia:navigate', async (event) => {
     const sweetalert2Data = event.detail.page.props.flash?.['{{ Swal::SESSION_KEY }}'];
-    
+
     if (sweetalert2Data && typeof sweetalert2Data === 'object') {
       Swal = Swal || await getSweetAlert2();
       Swal.fire(sweetalert2Data);
