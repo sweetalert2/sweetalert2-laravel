@@ -1,4 +1,5 @@
 vendor
 node_modules
-sweetalert2-laravel-test
+sweetalert2-livewire-test
+sweetalert2-inertia-test
 composer.lock

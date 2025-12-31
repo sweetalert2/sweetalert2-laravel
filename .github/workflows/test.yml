@@ -11,20 +11,27 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - name: Make a new Laravel project
+      - name: Make 2 Laravel projects, Livewire and Inertia
         run: |
           composer global require laravel/installer
-          ~/.composer/vendor/bin/laravel new sweetalert2-laravel-test --pest --no-interaction
+          ~/.composer/vendor/bin/laravel new sweetalert2-livewire-test --pest --no-interaction
+          ~/.composer/vendor/bin/laravel new sweetalert2-inertia-test --pest --no-interaction
 
-      - name: Install sweetalert2/laravel package and Livewire
+      - name: Install Livewire and sweetalert2/laravel
         run: |
-          cd sweetalert2-laravel-test
-          composer require sweetalert2/laravel
+          cd sweetalert2-livewire-test
           composer require livewire/livewire
+          composer require sweetalert2/laravel
 
-      - name: Copy local tests to the project and run them
+      - name: Install Inertia and sweetalert2/laravel
         run: |
-          cd sweetalert2-laravel-test
+          cd sweetalert2-inertia-test
+          composer require inertiajs/inertia-laravel
+          composer require sweetalert2/laravel
+
+      - name: Copy Livewire tests
+        run: |
+          cd sweetalert2-livewire-test
           cp ../tests/*Test.php tests/Feature
           rm tests/Feature/ExampleTest.php tests/Unit/ExampleTest.php
           cp -r ../tests/Livewire app
@@ -33,15 +40,14 @@ jobs:
 
       - name: Set up browser testing
         run: |
-          cd sweetalert2-laravel-test
+          cd sweetalert2-livewire-test
           composer require pestphp/pest-plugin-browser --dev
           npm install playwright
-          npx playwright install-deps
-          npx playwright install
+          npx playwright install chromium
 
       - name: Run tests
         run: |
-          cd sweetalert2-laravel-test
+          cd sweetalert2-livewire-test
           ./vendor/bin/pest
 
       - name: Store screenshots
