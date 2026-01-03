@@ -1,3 +1,5 @@
+# Demos: [Inertia + React](https://github.com/sweetalert2/sweetalert2-laravel-inertia-react-demo/) | [Livewire](https://github.com/sweetalert2/sweetalert2-laravel-livewire-demo)
+
 # Installation
 
 ```sh
