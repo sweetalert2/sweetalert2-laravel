@@ -4,8 +4,6 @@
         @livewireStyles
     </head>
     <body>
-        <livewire:counter />
-        @livewireScripts
         @include('sweetalert2::index')
     </body>
 </html>

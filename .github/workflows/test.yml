@@ -11,48 +11,26 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - name: Make 2 Laravel projects, Livewire and Inertia
+      - name: Make new Laravel project
         run: |
           composer global require laravel/installer
-          ~/.composer/vendor/bin/laravel new sweetalert2-livewire-test --pest --no-interaction
-          ~/.composer/vendor/bin/laravel new sweetalert2-inertia-test --pest --no-interaction
+          ~/.composer/vendor/bin/laravel new sweetalert2-laravel-test --pest --no-interaction
 
-      - name: Install Livewire and sweetalert2/laravel
+      - name: Install sweetalert2/laravel
         run: |
-          cd sweetalert2-livewire-test
-          composer require livewire/livewire
+          cd sweetalert2-laravel-test
           composer require sweetalert2/laravel
 
-      - name: Install Inertia and sweetalert2/laravel
+      - name: Copy Tests
         run: |
-          cd sweetalert2-inertia-test
-          composer require inertiajs/inertia-laravel
-          composer require sweetalert2/laravel
-
-      - name: Copy Livewire tests
-        run: |
-          cd sweetalert2-livewire-test
+          cd sweetalert2-laravel-test
           cp ../tests/*Test.php tests/Feature
           rm tests/Feature/ExampleTest.php tests/Unit/ExampleTest.php
-          cp -r ../tests/Livewire app
           rm -rf resources/views
           cp -r ../tests/views resources
 
-      - name: Set up browser testing
-        run: |
-          cd sweetalert2-livewire-test
-          composer require pestphp/pest-plugin-browser --dev
-          npm install playwright
-          npx playwright install chromium
-
       - name: Run tests
         run: |
-          cd sweetalert2-livewire-test
+          cd sweetalert2-laravel-test
           ./vendor/bin/pest
 
-      - name: Store screenshots
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: screenshots
-          path: Tests/Browser/Screenshots
