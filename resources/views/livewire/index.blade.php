@@ -22,7 +22,7 @@
   @if(session()->has(Swal::SESSION_KEY))
     (async () => {
         Swal = await getSweetAlert2();
-        Swal.fire(@json(session()->pull(Swal::SESSION_KEY)));
+        {!! Swal::renderFireCall(session()->pull(Swal::SESSION_KEY)) !!};
     })();
   @endif
 
@@ -31,7 +31,24 @@
       return;
     }
     Swal = Swal || await getSweetAlert2();
-    Swal.fire(event.detail);
+    
+    // Handle callbacks in Livewire events
+    const options = {...event.detail};
+    const callbacks = ['didOpen', 'didClose', 'didDestroy', 'willOpen', 'willClose', 'didRender', 'preDeny', 'preConfirm', 'inputValidator', 'inputOptions', 'loaderHtml'];
+    
+    callbacks.forEach(callback => {
+      if (typeof options[callback] === 'string') {
+        try {
+          // Convert string to function
+          options[callback] = new Function('return ' + options[callback])();
+        } catch (e) {
+          console.error(`Failed to parse ${callback} callback:`, e);
+          delete options[callback];
+        }
+      }
+    });
+    
+    Swal.fire(options);
   });
 </script>
 

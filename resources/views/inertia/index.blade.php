@@ -25,7 +25,24 @@
 
     if (sweetalert2Data && typeof sweetalert2Data === 'object') {
       Swal = Swal || await getSweetAlert2();
-      Swal.fire(sweetalert2Data);
+      
+      // Handle callbacks in Inertia
+      const options = {...sweetalert2Data};
+      const callbacks = ['didOpen', 'didClose', 'didDestroy', 'willOpen', 'willClose', 'didRender', 'preDeny', 'preConfirm', 'inputValidator', 'inputOptions', 'loaderHtml'];
+      
+      callbacks.forEach(callback => {
+        if (typeof options[callback] === 'string') {
+          try {
+            // Convert string to function
+            options[callback] = new Function('return ' + options[callback])();
+          } catch (e) {
+            console.error(`Failed to parse ${callback} callback:`, e);
+            delete options[callback];
+          }
+        }
+      });
+      
+      Swal.fire(options);
     }
   });
 </script>
