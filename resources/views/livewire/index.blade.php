@@ -34,12 +34,12 @@
     
     // Handle callbacks in Livewire events
     const options = {...event.detail};
-    const callbacks = ['didOpen', 'didClose', 'didDestroy', 'willOpen', 'willClose', 'didRender', 'preDeny', 'preConfirm', 'inputValidator', 'inputOptions', 'loaderHtml'];
+    const callbackOptions = @json(Swal::CALLBACK_OPTIONS);
     
-    callbacks.forEach(callback => {
+    callbackOptions.forEach(callback => {
       if (typeof options[callback] === 'string') {
         try {
-          // Convert string to function
+          // Convert string to function (only for callbacks set by PHP backend, not user input)
           options[callback] = new Function('return ' + options[callback])();
         } catch (e) {
           console.error(`Failed to parse ${callback} callback:`, e);

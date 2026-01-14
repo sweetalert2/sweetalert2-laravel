@@ -403,6 +403,12 @@ Swal::fire([
    - Complex logic should be kept in JavaScript files and called from the callbacks
    - For advanced use cases, consider using the SweetAlert2 API directly in JavaScript
 
+4. **Security considerations**:
+   - Callback strings are executed as JavaScript in the browser
+   - **Only pass callback strings from trusted sources (your PHP backend code)**
+   - **Never pass user input directly as callback strings** to prevent XSS vulnerabilities
+   - If you need to include dynamic data in callbacks, use regular options or HTML content instead
+
 ### Example: Toast with Timer Control
 
 ```php

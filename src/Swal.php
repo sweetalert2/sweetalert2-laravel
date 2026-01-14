@@ -22,8 +22,10 @@ class Swal
     /**
      * List of SweetAlert2 options that accept callback functions.
      * These will be rendered as JavaScript functions instead of JSON strings.
+     * 
+     * @var array
      */
-    private const CALLBACK_OPTIONS = [
+    public const CALLBACK_OPTIONS = [
         'didOpen',
         'didClose',
         'didDestroy',
@@ -246,6 +248,10 @@ class Swal
 
     /**
      * Renders the Swal.fire() JavaScript call with proper callback handling.
+     * 
+     * Security: Callback strings are rendered as JavaScript and executed in the browser.
+     * Only use callback strings from trusted sources (your backend code). Never pass 
+     * user input directly as callback strings to prevent XSS vulnerabilities.
      *
      * @param array $data The session data containing options
      * @return string JavaScript code to call Swal.fire()
