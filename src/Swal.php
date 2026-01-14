@@ -264,7 +264,7 @@ class Swal
 
         if (empty($callbacks)) {
             // No callbacks, just render as JSON
-            return 'Swal.fire(' . json_encode($options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . ')';
+            return 'Swal.fire(' . json_encode($options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR) . ')';
         }
 
         // Build JavaScript object with callbacks
@@ -272,12 +272,12 @@ class Swal
         
         // Add regular options
         foreach ($options as $key => $value) {
-            $parts[] = json_encode($key) . ': ' . json_encode($value, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+            $parts[] = json_encode($key, JSON_THROW_ON_ERROR) . ': ' . json_encode($value, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR);
         }
 
         // Add callbacks as raw JavaScript
         foreach ($callbacks as $key => $callback) {
-            $parts[] = json_encode($key) . ': ' . $callback;
+            $parts[] = json_encode($key, JSON_THROW_ON_ERROR) . ': ' . $callback;
         }
 
         return 'Swal.fire({' . implode(', ', $parts) . '})';
