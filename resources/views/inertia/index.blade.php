@@ -32,8 +32,12 @@
       callbackOptions.forEach(callback => {
         if (typeof options[callback] === 'string') {
           try {
+            // Sanitize callback to prevent XSS (escape closing script/style tags)
+            const sanitized = options[callback]
+              .replace(/<\/script/gi, '<\\/script')
+              .replace(/<\/style/gi, '<\\/style');
             // Convert string to function (only for callbacks set by PHP backend, not user input)
-            options[callback] = new Function('return ' + options[callback])();
+            options[callback] = new Function('return ' + sanitized)();
           } catch (e) {
             console.error(`Failed to parse ${callback} callback:`, e);
             delete options[callback];

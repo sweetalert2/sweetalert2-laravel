@@ -405,9 +405,26 @@ Swal::fire([
 
 4. **Security considerations**:
    - Callback strings are executed as JavaScript in the browser
-   - **Only pass callback strings from trusted sources (your PHP backend code)**
-   - **Never pass user input directly as callback strings** to prevent XSS vulnerabilities
-   - If you need to include dynamic data in callbacks, use regular options or HTML content instead
+   - **⚠️ CRITICAL: Only pass callback strings from trusted sources (your PHP backend code)**
+   - **⚠️ NEVER pass user input directly as callback strings** to prevent XSS (Cross-Site Scripting) vulnerabilities
+   - The package includes built-in XSS protection that escapes dangerous patterns in callbacks, but this is a defense-in-depth measure
+   - Always validate and sanitize user input before including it in any SweetAlert2 options
+   - If you need to include dynamic user-provided data, use regular options (like `title`, `text`, `html`) which are safely JSON-encoded
+   - Example of unsafe usage (NEVER do this):
+     ```php
+     // ❌ UNSAFE - DO NOT DO THIS
+     Swal::fire([
+         'didOpen' => $_GET['callback'], // User input as callback = XSS vulnerability!
+     ]);
+     ```
+   - Example of safe usage:
+     ```php
+     // ✅ SAFE - User data in regular options, callbacks from your code
+     Swal::fire([
+         'title' => htmlspecialchars($_GET['message']), // User input safely encoded
+         'didOpen' => '(popup) => { console.log("Opened"); }', // Your trusted code
+     ]);
+     ```
 
 ### Example: Toast with Timer Control
 

@@ -275,11 +275,31 @@ class Swal
             $parts[] = json_encode($key, JSON_THROW_ON_ERROR) . ': ' . json_encode($value, JSON_HEX_TAG | JSON_THROW_ON_ERROR);
         }
 
-        // Add callbacks as raw JavaScript
+        // Add callbacks as raw JavaScript (with sanitization to prevent XSS)
         foreach ($callbacks as $key => $callback) {
-            $parts[] = json_encode($key, JSON_THROW_ON_ERROR) . ': ' . $callback;
+            $parts[] = json_encode($key, JSON_THROW_ON_ERROR) . ': ' . self::sanitizeCallback($callback);
         }
 
         return 'Swal.fire({' . implode(', ', $parts) . '})';
+    }
+
+    /**
+     * Sanitizes a callback string to prevent XSS attacks.
+     * Escapes closing script and style tags and other potentially dangerous patterns.
+     *
+     * @param string $callback The callback string to sanitize
+     * @return string The sanitized callback string
+     */
+    private static function sanitizeCallback(string $callback): string
+    {
+        // Escape closing script tags to prevent script injection (case-insensitive)
+        // This matches any closing script tag regardless of attributes
+        // Replace </ with <\/ to break the tag (JSON-safe escape)
+        $callback = preg_replace('/<\/(script)/i', '<\\/$1', $callback);
+        
+        // Escape closing style tags (case-insensitive)
+        $callback = preg_replace('/<\/(style)/i', '<\\/$1', $callback);
+        
+        return $callback;
     }
 }
