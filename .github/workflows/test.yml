@@ -19,7 +19,8 @@ jobs:
       - name: Install sweetalert2/laravel
         run: |
           cd sweetalert2-laravel-test
-          composer require sweetalert2/laravel
+          composer config repositories.local path ../
+          composer require sweetalert2/laravel:@dev
 
       - name: Copy Tests
         run: |
