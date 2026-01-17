@@ -79,6 +79,29 @@ Swal::toastQuestion([
 ]);
 ```
 
+### Using JavaScript Callbacks
+
+You can use JavaScript callbacks (like `didOpen`, `willClose`, etc.) by passing them as strings:
+
+```php
+// Toast with pause on hover
+Swal::fire([
+    'title' => 'Auto close alert',
+    'toast' => true,
+    'position' => 'top-end',
+    'icon' => 'info',
+    'showConfirmButton' => false,
+    'timer' => 3000,
+    'timerProgressBar' => true,
+    'didOpen' => '(toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+    }',
+]);
+```
+
+For more details on using callbacks, see [FAQ #4](#4-what-are-the-limitations).
+
 ![SweetAlert2 Laravel](sweetalert2-laravel.png)
 
 ## Livewire Components
@@ -159,6 +182,25 @@ $this->swalToastInfo([
 ]);
 $this->swalToastQuestion([
     'title' => 'Toast with a question icon',
+]);
+```
+
+### Using JavaScript Callbacks in Livewire
+
+Just like in Laravel controllers, you can use JavaScript callbacks in Livewire components:
+
+```php
+$this->swalFire([
+    'title' => 'Processing...',
+    'toast' => true,
+    'position' => 'top-end',
+    'icon' => 'info',
+    'timer' => 3000,
+    'timerProgressBar' => true,
+    'didOpen' => '(toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+    }',
 ]);
 ```
 
@@ -330,5 +372,59 @@ This package uses a smart loading strategy for the SweetAlert2 library:
 
 ## 4. What are the limitations?
 
-SweetAlert2 is a JavaScript package and some of its options are JS callbacks. It's not possible to use them in the `Swal::fire()` or `$this->swalFire()` methods.
-If you need to use JS callbacks, you have to go to JS and use the SweetAlert2 API directly.
+SweetAlert2 is a JavaScript package and some of its options are JS callbacks. While you can pass JavaScript callback functions as strings in the `Swal::fire()` or `$this->swalFire()` methods, keep in mind:
+
+1. **Callbacks must be passed as strings**: Write your JavaScript function as a string. For example:
+
+```php
+Swal::fire([
+    'title' => 'Toast notification',
+    'toast' => true,
+    'position' => 'top-end',
+    'didOpen' => '(toast) => { toast.onmouseenter = Swal.stopTimer; toast.onmouseleave = Swal.resumeTimer; }',
+]);
+```
+
+2. **Supported callback options**: The following callback options are supported and will be rendered as JavaScript functions:
+   - `didOpen`
+   - `didClose`
+   - `didDestroy`
+   - `willOpen`
+   - `willClose`
+   - `didRender`
+   - `preDeny`
+   - `preConfirm`
+   - `inputValidator`
+   - `inputOptions`
+   - `loaderHtml`
+
+3. **Callback limitations**: 
+   - You cannot use PHP variables directly in callback strings (use JavaScript variables or values from the alert instead)
+   - Complex logic should be kept in JavaScript files and called from the callbacks
+   - For advanced use cases, consider using the SweetAlert2 API directly in JavaScript
+
+4. **Security considerations**:
+   - Callback strings are executed as JavaScript in the browser
+   - **Only pass callback strings from trusted sources (your PHP backend code)**
+   - **Never pass user input directly as callback strings** to prevent XSS vulnerabilities
+   - If you need to include dynamic data in callbacks, use regular options or HTML content instead
+
+### Example: Toast with Timer Control
+
+```php
+use SweetAlert2\Laravel\Swal;
+
+Swal::fire([
+    'title' => 'Your session will expire soon',
+    'toast' => true,
+    'position' => 'top-end',
+    'icon' => 'warning',
+    'showConfirmButton' => false,
+    'timer' => 3000,
+    'timerProgressBar' => true,
+    'didOpen' => '(toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+    }',
+]);
+```

@@ -18,6 +18,26 @@ namespace SweetAlert2\Laravel;
 class Swal
 {
     public const SESSION_KEY = 'sweetalert2-message';
+    
+    /**
+     * List of SweetAlert2 options that accept callback functions.
+     * These will be rendered as JavaScript functions instead of JSON strings.
+     * 
+     * @var array
+     */
+    public const CALLBACK_OPTIONS = [
+        'didOpen',
+        'didClose',
+        'didDestroy',
+        'willOpen',
+        'willClose',
+        'didRender',
+        'preDeny',
+        'preConfirm',
+        'inputValidator',
+        'inputOptions',
+        'loaderHtml',
+    ];
     /**
      * Displays a SweetAlert2 popup.
      *
@@ -198,5 +218,68 @@ class Swal
     public static function toastQuestion(array $options = []): void
     {
         self::fire([...$options, 'toast' => true, 'icon' => 'question']);
+    }
+
+    /**
+     * Separates callback options from regular options.
+     * Callbacks will be stored with a special marker to be rendered as JavaScript functions.
+     *
+     * @param array $options The full options array
+     * @return array Array with 'options' (regular JSON-serializable options) and 'callbacks' (JavaScript callback strings)
+     */
+    public static function separateCallbacks(array $options): array
+    {
+        $callbacks = [];
+        $regularOptions = [];
+
+        foreach ($options as $key => $value) {
+            if (in_array($key, self::CALLBACK_OPTIONS) && is_string($value)) {
+                $callbacks[$key] = $value;
+            } else {
+                $regularOptions[$key] = $value;
+            }
+        }
+
+        return [
+            'options' => $regularOptions,
+            'callbacks' => $callbacks,
+        ];
+    }
+
+    /**
+     * Renders the Swal.fire() JavaScript call with proper callback handling.
+     * 
+     * Security: Callback strings are rendered as JavaScript and executed in the browser.
+     * Only use callback strings from trusted sources (your backend code). Never pass 
+     * user input directly as callback strings to prevent XSS vulnerabilities.
+     *
+     * @param array $data The session data containing options
+     * @return string JavaScript code to call Swal.fire()
+     */
+    public static function renderFireCall(array $data): string
+    {
+        $separated = self::separateCallbacks($data);
+        $options = $separated['options'];
+        $callbacks = $separated['callbacks'];
+
+        if (empty($callbacks)) {
+            // No callbacks, just render as JSON
+            return 'Swal.fire(' . json_encode($options, JSON_HEX_TAG | JSON_THROW_ON_ERROR) . ')';
+        }
+
+        // Build JavaScript object with callbacks
+        $parts = [];
+        
+        // Add regular options
+        foreach ($options as $key => $value) {
+            $parts[] = json_encode($key, JSON_THROW_ON_ERROR) . ': ' . json_encode($value, JSON_HEX_TAG | JSON_THROW_ON_ERROR);
+        }
+
+        // Add callbacks as raw JavaScript
+        foreach ($callbacks as $key => $callback) {
+            $parts[] = json_encode($key, JSON_THROW_ON_ERROR) . ': ' . $callback;
+        }
+
+        return 'Swal.fire({' . implode(', ', $parts) . '})';
     }
 }
