@@ -285,7 +285,7 @@ class Swal
 
     /**
      * Sanitizes a callback string to prevent XSS attacks.
-     * Escapes closing script tags and other potentially dangerous patterns.
+     * Escapes closing script and style tags and other potentially dangerous patterns.
      *
      * @param string $callback The callback string to sanitize
      * @return string The sanitized callback string
@@ -293,11 +293,12 @@ class Swal
     private static function sanitizeCallback(string $callback): string
     {
         // Escape closing script tags to prevent script injection (case-insensitive)
-        // Replace </script with <\/script (JSON-safe escape)
-        $callback = preg_replace('/<\/script/i', '<\\/script', $callback);
+        // This matches any closing script tag regardless of attributes
+        // Replace </ with <\/ to break the tag (JSON-safe escape)
+        $callback = preg_replace('/<\/(script)/i', '<\\/$1', $callback);
         
         // Escape closing style tags (case-insensitive)
-        $callback = preg_replace('/<\/style/i', '<\\/style', $callback);
+        $callback = preg_replace('/<\/(style)/i', '<\\/$1', $callback);
         
         return $callback;
     }
