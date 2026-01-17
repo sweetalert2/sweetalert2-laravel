@@ -1,6 +1,5 @@
 @use('SweetAlert2\Laravel\Swal')
 <script type="module">
-  let Swal;
   const getSweetAlert2 = async () => {
     // If SweetAlert2 is already loaded, use it
     if (window.Swal) {
@@ -24,7 +23,7 @@
     const sweetalert2Data = event.detail.page.props.flash?.['{{ Swal::SESSION_KEY }}'];
 
     if (sweetalert2Data && typeof sweetalert2Data === 'object') {
-      Swal = Swal || await getSweetAlert2();
+      window.Swal = window.Swal || await getSweetAlert2();
       
       // Handle callbacks in Inertia
       const options = {...sweetalert2Data};
@@ -42,7 +41,7 @@
         }
       });
       
-      Swal.fire(options);
+      window.Swal.fire(options);
     }
   });
 </script>

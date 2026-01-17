@@ -1,6 +1,5 @@
 @use('SweetAlert2\Laravel\Swal')
 <script type="module">
-  let Swal;
   const getSweetAlert2 = async () => {
     // If SweetAlert2 is already loaded, use it
     if (window.Swal) {
@@ -21,7 +20,7 @@
 
   @if(session()->has(Swal::SESSION_KEY))
     (async () => {
-        Swal = await getSweetAlert2();
+        window.Swal = await getSweetAlert2();
         {!! Swal::renderFireCall(session()->pull(Swal::SESSION_KEY)) !!};
     })();
   @endif
@@ -30,12 +29,12 @@
     if (!event.detail || typeof event.detail !== 'object') {
       return;
     }
-    Swal = Swal || await getSweetAlert2();
-    
+    window.Swal = window.Swal || await getSweetAlert2();
+
     // Handle callbacks in Livewire events
     const options = {...event.detail};
     const callbackOptions = @json(Swal::CALLBACK_OPTIONS);
-    
+
     callbackOptions.forEach(callback => {
       if (typeof options[callback] === 'string') {
         try {
@@ -47,8 +46,8 @@
         }
       }
     });
-    
-    Swal.fire(options);
+
+    window.Swal.fire(options);
   });
 </script>
 

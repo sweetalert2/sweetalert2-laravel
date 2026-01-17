@@ -1,7 +1,6 @@
 @use('SweetAlert2\Laravel\Swal')
 @if(session()->has(Swal::SESSION_KEY))
   <script type="module">
-    let Swal;
     const getSweetAlert2 = async () => {
       // If SweetAlert2 is already loaded, use it
       if (window.Swal) {
@@ -21,7 +20,7 @@
     };
 
     (async () => {
-      Swal = await getSweetAlert2();
+      window.Swal = await getSweetAlert2();
       {!! Swal::renderFireCall(session()->pull(Swal::SESSION_KEY)) !!};
     })();
   </script>
