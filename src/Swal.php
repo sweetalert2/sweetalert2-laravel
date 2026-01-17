@@ -292,12 +292,12 @@ class Swal
      */
     private static function sanitizeCallback(string $callback): string
     {
-        // Escape closing script tags to prevent script injection
+        // Escape closing script tags to prevent script injection (case-insensitive)
         // Replace </script with <\/script (JSON-safe escape)
-        $callback = str_replace(['</script', '</SCRIPT'], ['<\/script', '<\/SCRIPT'], $callback);
+        $callback = preg_replace('/<\/script/i', '<\\/script', $callback);
         
-        // Escape closing style tags
-        $callback = str_replace(['</style', '</STYLE'], ['<\/style', '<\/STYLE'], $callback);
+        // Escape closing style tags (case-insensitive)
+        $callback = preg_replace('/<\/style/i', '<\\/style', $callback);
         
         return $callback;
     }
