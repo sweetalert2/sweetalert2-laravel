@@ -2,6 +2,7 @@
 
 namespace SweetAlert2\Laravel\Traits;
 
+use Livewire\Component;
 use SweetAlert2\Laravel\Swal;
 
 /**
@@ -17,7 +18,6 @@ use SweetAlert2\Laravel\Swal;
  *     $this->swalFire(['title' => 'Hello World!', 'icon' => 'success']);
  * </code>
  *
- * @package SweetAlert2\Laravel
  * @see https://sweetalert2.github.io
  */
 trait WithSweetAlert
@@ -30,11 +30,11 @@ trait WithSweetAlert
      *     $this->swalFire(['title' => 'Hello World!', 'icon' => 'success']);
      * </code>
      *
-     * @param array $options Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
+     * @param  array  $options  Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
      */
     public function swalFire(array $options = []): void
     {
-        if ($this instanceof \Livewire\Component) {
+        if ($this instanceof Component) {
             $this->dispatch(Swal::SESSION_KEY, ...$options);
         } else {
             Swal::fire($options);
@@ -49,7 +49,7 @@ trait WithSweetAlert
      *      $this->swalSuccess(['title' => 'Hello World!']);
      *  </code>
      *
-     * @param array $options Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
+     * @param  array  $options  Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
      */
     public function swalSuccess(array $options = []): void
     {
@@ -64,7 +64,7 @@ trait WithSweetAlert
      *     $this->swalError(['title' => 'Hello World!']);
      * </code>
      *
-     * @param array $options Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
+     * @param  array  $options  Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
      */
     public function swalError(array $options = []): void
     {
@@ -79,7 +79,7 @@ trait WithSweetAlert
      *     $this->swalWarning(['title' => 'Hello World!']);
      * </code>
      *
-     * @param array $options Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
+     * @param  array  $options  Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
      */
     public function swalWarning(array $options = []): void
     {
@@ -94,7 +94,7 @@ trait WithSweetAlert
      *     $this->swalInfo(['title' => 'Hello World!']);
      * </code>
      *
-     * @param array $options Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
+     * @param  array  $options  Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
      */
     public function swalInfo(array $options = []): void
     {
@@ -109,7 +109,7 @@ trait WithSweetAlert
      *     $this->swalQuestion(['title' => 'Hello World!']);
      * </code>
      *
-     * @param array $options Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
+     * @param  array  $options  Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
      */
     public function swalQuestion(array $options = []): void
     {
@@ -126,7 +126,7 @@ trait WithSweetAlert
      *     $this->swalToast(['title' => 'Hello World!', 'icon' => 'success']);
      * </code>
      *
-     * @param array $options Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
+     * @param  array  $options  Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
      */
     public function swalToast(array $options = []): void
     {
@@ -141,7 +141,7 @@ trait WithSweetAlert
      *     $this->swalToastSuccess(['title' => 'Hello World!']);
      * </code>
      *
-     * @param array $options Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
+     * @param  array  $options  Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
      */
     public function swalToastSuccess(array $options = []): void
     {
@@ -156,7 +156,7 @@ trait WithSweetAlert
      *     $this->swalToastError(['title' => 'Hello World!']);
      * </code>
      *
-     * @param array $options Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
+     * @param  array  $options  Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
      */
     public function swalToastError(array $options = []): void
     {
@@ -171,7 +171,7 @@ trait WithSweetAlert
      *     $this->swalToastWarning(['title' => 'Hello World!']);
      * </code>
      *
-     * @param array $options Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
+     * @param  array  $options  Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
      */
     public function swalToastWarning(array $options = []): void
     {
@@ -186,7 +186,7 @@ trait WithSweetAlert
      *     $this->swalToastInfo(['title' => 'Hello World!']);
      * </code>
      *
-     * @param array $options Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
+     * @param  array  $options  Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
      */
     public function swalToastInfo(array $options = []): void
     {
@@ -201,7 +201,7 @@ trait WithSweetAlert
      *     $this->swalToastQuestion(['title' => 'Hello World!']);
      * </code>
      *
-     * @param array $options Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
+     * @param  array  $options  Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
      */
     public function swalToastQuestion(array $options = []): void
     {

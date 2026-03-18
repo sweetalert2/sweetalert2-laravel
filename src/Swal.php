@@ -12,17 +12,16 @@ namespace SweetAlert2\Laravel;
  *     Swal::fire(['title' => 'Hello World!', 'icon' => 'success']);
  * </code>
  *
- * @package SweetAlert2\Laravel
  * @see https://sweetalert2.github.io
  */
 class Swal
 {
     public const SESSION_KEY = 'sweetalert2-message';
-    
+
     /**
      * List of SweetAlert2 options that accept callback functions.
      * These will be rendered as JavaScript functions instead of JSON strings.
-     * 
+     *
      * @var array
      */
     public const CALLBACK_OPTIONS = [
@@ -36,8 +35,8 @@ class Swal
         'preConfirm',
         'inputValidator',
         'inputOptions',
-        'loaderHtml',
     ];
+
     /**
      * Displays a SweetAlert2 popup.
      *
@@ -46,7 +45,7 @@ class Swal
      *     Swal::fire(['title' => 'Hello World!', 'icon' => 'success']);
      * </code>
      *
-     * @param array $options Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
+     * @param  array  $options  Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
      */
     public static function fire(array $options = []): void
     {
@@ -61,7 +60,7 @@ class Swal
      *     Swal::success(['title' => 'Hello World!']);
      * </code>
      *
-     * @param array $options Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
+     * @param  array  $options  Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
      */
     public static function success(array $options = []): void
     {
@@ -76,7 +75,7 @@ class Swal
      *     Swal::error(['title' => 'Hello World!']);
      * </code>
      *
-     * @param array $options Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
+     * @param  array  $options  Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
      */
     public static function error(array $options = []): void
     {
@@ -91,7 +90,7 @@ class Swal
      *     Swal::warning(['title' => 'Hello World!']);
      * </code>
      *
-     * @param array $options Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
+     * @param  array  $options  Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
      */
     public static function warning(array $options = []): void
     {
@@ -106,7 +105,7 @@ class Swal
      *     Swal::info(['title' => 'Hello World!']);
      * </code>
      *
-     * @param array $options Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
+     * @param  array  $options  Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
      */
     public static function info(array $options = []): void
     {
@@ -121,7 +120,7 @@ class Swal
      *     Swal::question(['title' => 'Hello World!']);
      * </code>
      *
-     * @param array $options Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
+     * @param  array  $options  Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
      */
     public static function question(array $options = []): void
     {
@@ -138,7 +137,7 @@ class Swal
      *     Swal::toast(['title' => 'Hello World!', 'icon' => 'success']);
      * </code>
      *
-     * @param array $options Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
+     * @param  array  $options  Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
      */
     public static function toast(array $options = []): void
     {
@@ -153,7 +152,7 @@ class Swal
      *     Swal::toastSuccess(['title' => 'Hello World!']);
      * </code>
      *
-     * @param array $options Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
+     * @param  array  $options  Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
      */
     public static function toastSuccess(array $options = []): void
     {
@@ -168,7 +167,7 @@ class Swal
      *     Swal::toastError(['title' => 'Hello World!']);
      * </code>
      *
-     * @param array $options Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
+     * @param  array  $options  Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
      */
     public static function toastError(array $options = []): void
     {
@@ -183,7 +182,7 @@ class Swal
      *     Swal::toastWarning(['title' => 'Hello World!']);
      * </code>
      *
-     * @param array $options Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
+     * @param  array  $options  Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
      */
     public static function toastWarning(array $options = []): void
     {
@@ -198,7 +197,7 @@ class Swal
      *     Swal::toastInfo(['title' => 'Hello World!']);
      * </code>
      *
-     * @param array $options Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
+     * @param  array  $options  Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
      */
     public static function toastInfo(array $options = []): void
     {
@@ -213,7 +212,7 @@ class Swal
      *     Swal::toastQuestion(['title' => 'Hello World!']);
      * </code>
      *
-     * @param array $options Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
+     * @param  array  $options  Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
      */
     public static function toastQuestion(array $options = []): void
     {
@@ -224,7 +223,7 @@ class Swal
      * Separates callback options from regular options.
      * Callbacks will be stored with a special marker to be rendered as JavaScript functions.
      *
-     * @param array $options The full options array
+     * @param  array  $options  The full options array
      * @return array Array with 'options' (regular JSON-serializable options) and 'callbacks' (JavaScript callback strings)
      */
     public static function separateCallbacks(array $options): array
@@ -248,12 +247,12 @@ class Swal
 
     /**
      * Renders the Swal.fire() JavaScript call with proper callback handling.
-     * 
+     *
      * Security: Callback strings are rendered as JavaScript and executed in the browser.
-     * Only use callback strings from trusted sources (your backend code). Never pass 
+     * Only use callback strings from trusted sources (your backend code). Never pass
      * user input directly as callback strings to prevent XSS vulnerabilities.
      *
-     * @param array $data The session data containing options
+     * @param  array  $data  The session data containing options
      * @return string JavaScript code to call Swal.fire()
      */
     public static function renderFireCall(array $data): string
@@ -269,7 +268,7 @@ class Swal
 
         // Build JavaScript object with callbacks
         $parts = [];
-        
+
         // Add regular options
         foreach ($options as $key => $value) {
             $parts[] = json_encode($key, JSON_THROW_ON_ERROR) . ': ' . json_encode($value, JSON_HEX_TAG | JSON_THROW_ON_ERROR);
@@ -287,7 +286,7 @@ class Swal
      * Sanitizes a callback string to prevent XSS attacks.
      * Escapes closing script and style tags and other potentially dangerous patterns.
      *
-     * @param string $callback The callback string to sanitize
+     * @param  string  $callback  The callback string to sanitize
      * @return string The sanitized callback string
      */
     private static function sanitizeCallback(string $callback): string
@@ -296,10 +295,10 @@ class Swal
         // This matches any closing script tag regardless of attributes
         // Replace </ with <\/ to break the tag (JSON-safe escape)
         $callback = preg_replace('/<\/(script)/i', '<\\/$1', $callback);
-        
+
         // Escape closing style tags (case-insensitive)
         $callback = preg_replace('/<\/(style)/i', '<\\/$1', $callback);
-        
+
         return $callback;
     }
 }
