@@ -36,7 +36,6 @@ class Swal
         'preConfirm',
         'inputValidator',
         'inputOptions',
-        'loaderHtml',
     ];
     /**
      * Displays a SweetAlert2 popup.

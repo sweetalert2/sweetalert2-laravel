@@ -183,3 +183,16 @@ test('Swal::fire() with multiple callbacks', function () {
         ->assertSee('"didOpen": () => { console.log("opened"); }', escape: false)
         ->assertSee('"willClose": () => { console.log("closing"); }', escape: false);
 });
+
+test('Swal::fire() with loaderHtml is JSON-encoded as a regular option', function () {
+    Swal::fire([
+        'title' => 'Loading...',
+        'loaderHtml' => '<span class="custom-loader">Loading...</span>',
+    ]);
+
+    $response = $this->get('/');
+
+    $response
+        ->assertStatus(200)
+        ->assertSee('Swal.fire({"title":"Loading...","loaderHtml":"\u003Cspan class=\"custom-loader\"\u003ELoading...\u003C\/span\u003E"})', escape: false);
+});
