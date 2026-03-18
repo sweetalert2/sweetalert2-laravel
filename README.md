@@ -396,7 +396,6 @@ Swal::fire([
    - `preConfirm`
    - `inputValidator`
    - `inputOptions`
-   - `loaderHtml`
 
 3. **Callback limitations**: 
    - You cannot use PHP variables directly in callback strings (use JavaScript variables or values from the alert instead)
