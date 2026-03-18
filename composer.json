@@ -3,7 +3,7 @@
   "description": "Official SweetAlert2 integration for Laravel framework",
   "license": "MIT",
   "require": {
-    "laravel/framework": "^11.0 || ^12.0"
+    "laravel/framework": "^11.0 || ^12.0 || ^13.0"
   },
   "autoload": {
     "psr-4": {
