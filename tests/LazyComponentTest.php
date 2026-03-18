@@ -26,7 +26,7 @@ test('Alert data persists in session before rendering', function () {
 
     // Verify session has the data
     expect(session()->has(Swal::SESSION_KEY))->toBeTrue();
-    
+
     // The data remains in session and can be retrieved with get()
     // This is different from flash() which would be consumed on next request
     expect(session()->get(Swal::SESSION_KEY))->toBe([
@@ -34,10 +34,10 @@ test('Alert data persists in session before rendering', function () {
         'text' => 'Data persists until pulled',
         'icon' => 'success',
     ]);
-    
+
     // Data is still there after getting it (not pulled yet)
     expect(session()->has(Swal::SESSION_KEY))->toBeTrue();
-    
+
     // Now when we render the view, it displays the alert
     $response = $this->get('/');
     $response

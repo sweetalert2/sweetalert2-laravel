@@ -7,7 +7,7 @@ test('Swal::fire()', function () {
         'title' => 'SweetAlert2 + Laravel = <3',
         'text' => 'This is a simple alert using SweetAlert2',
         'icon' => 'success',
-        'confirmButtonText' => 'Cool'
+        'confirmButtonText' => 'Cool',
     ]);
 
     $response = $this->get('/');
