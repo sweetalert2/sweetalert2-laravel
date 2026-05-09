@@ -72,3 +72,27 @@ test('Swal::renderFireCall() method sanitizes callbacks', function () {
         ->toContain('<\/script>')
         ->not->toContain('</script><script>alert("XSS")');
 });
+
+test('Swal::fire() does not render non-function callback strings as executable code', function () {
+    Swal::fire([
+        'title' => 'Invalid callback should stay string',
+        'didOpen' => 'alert("XSS")',
+    ]);
+
+    $response = $this->get('/');
+
+    $response
+        ->assertStatus(200)
+        ->assertSee('"didOpen":"alert(\"XSS\")"', escape: false)
+        ->assertDontSee('"didOpen": alert("XSS")', escape: false);
+});
+
+test('Swal::renderFireCall() keeps non-function callback strings JSON encoded', function () {
+    $result = Swal::renderFireCall([
+        'didOpen' => 'alert("XSS")',
+    ]);
+
+    expect($result)
+        ->toContain('"didOpen":"alert(\"XSS\")"')
+        ->not->toContain('"didOpen": alert("XSS")');
+});
