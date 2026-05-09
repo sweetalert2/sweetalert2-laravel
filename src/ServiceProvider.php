@@ -24,5 +24,11 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         } else {
             $this->loadViewsFrom(__DIR__ . '/../resources/views/laravel', 'sweetalert2');
         }
+
+        // Register shared views (e.g. the broadcast listener partial).
+        // When both paths contain a view with the same name, the shared path takes priority
+        // since it is registered last. The context-specific index.blade.php is found correctly
+        // because shared/index.blade.php does not exist.
+        $this->loadViewsFrom(__DIR__ . '/../resources/views/shared', 'sweetalert2');
     }
 }

@@ -16,7 +16,8 @@
   },
   "suggest": {
     "livewire/livewire": "Required to have the WithSweetAlert trait use Livewire events to show popups on Livewire updates.",
-    "inertiajs/inertia-laravel": "Required to use SweetAlert2 with Inertia.js shared flash data."
+    "inertiajs/inertia-laravel": "Required to use SweetAlert2 with Inertia.js shared flash data.",
+    "laravel/reverb": "Required (or another broadcaster) to use the real-time broadcasting feature with Swal::broadcast()."
   },
   "extra": {
     "laravel": {
