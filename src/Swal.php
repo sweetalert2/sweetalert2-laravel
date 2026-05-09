@@ -37,6 +37,8 @@ class Swal
         'inputOptions',
     ];
 
+    private const JSON_FLAGS = JSON_HEX_TAG | JSON_INVALID_UTF8_SUBSTITUTE | JSON_THROW_ON_ERROR;
+
     /**
      * Displays a SweetAlert2 popup.
      *
@@ -267,7 +269,7 @@ class Swal
 
         if (empty($callbacks)) {
             // No callbacks, just render as JSON
-            return 'Swal.fire(' . json_encode($options, JSON_HEX_TAG | JSON_THROW_ON_ERROR) . ')';
+            return 'Swal.fire(' . self::jsonEncode($options) . ')';
         }
 
         // Build JavaScript object with callbacks
@@ -275,7 +277,7 @@ class Swal
 
         // Add regular options
         foreach ($options as $key => $value) {
-            $parts[] = json_encode($key, JSON_THROW_ON_ERROR) . ': ' . json_encode($value, JSON_HEX_TAG | JSON_THROW_ON_ERROR);
+            $parts[] = self::jsonEncode($key) . ': ' . self::jsonEncode($value);
         }
 
         // Add callbacks as raw JavaScript (with sanitization to prevent XSS)
@@ -318,5 +320,10 @@ class Swal
             '/^\s*(?:async\s+)?function\b|^\s*(?:async\s*)?\([^)]*\)\s*=>|^\s*(?:async\s*)?[A-Za-z_$][A-Za-z0-9_$]*\s*=>/',
             $callback
         ) === 1;
+    }
+
+    private static function jsonEncode(mixed $value): string
+    {
+        return json_encode($value, self::JSON_FLAGS);
     }
 }
