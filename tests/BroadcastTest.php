@@ -87,24 +87,111 @@ test('broadcast view includes SweetAlert2 CDN loader', function () {
 });
 
 /* --------------------------------------------------------------------------
- * Swal shortcut method options tests
+ * Swal broadcast facade method tests
+ *
+ * These tests bind a lightweight recording broadcaster to verify that each
+ * Swal::broadcast*() method dispatches a SweetAlert2BroadcastEvent with the
+ * expected options and channel type.
  * -------------------------------------------------------------------------- */
 
-test('Swal::broadcastSuccess() builds event options with success icon', function () {
-    $event = new SweetAlert2BroadcastEvent('channel', ['title' => 'Done!', 'icon' => 'success']);
+/**
+ * Binds a lightweight broadcaster to the container that captures the next
+ * event() call on the given test instance ($this->capturedEvent).
+ */
+function bindRecordingBroadcaster(object $test): void
+{
+    app()->bind('Illuminate\Contracts\Broadcasting\Factory', function () use ($test) {
+        return new class($test) {
+            public function __construct(private object $test) {}
 
-    expect($event->broadcastWith())->toMatchArray(['icon' => 'success']);
+            public function event(mixed $event): void
+            {
+                $this->test->capturedEvent = $event;
+            }
+
+            // Stub methods required by the BroadcastFactory contract
+            public function connection(?string $name = null): static { return $this; }
+            public function socket(mixed $request = null): mixed { return null; }
+            public function auth(mixed $request): mixed { return null; }
+            public function validAuthenticationResponse(mixed $request, mixed $result): mixed { return null; }
+        };
+    });
+}
+
+beforeEach(function () {
+    $this->capturedEvent = null;
+    bindRecordingBroadcaster($this);
 });
 
-test('Swal::broadcastToastSuccess() builds event options with toast and success icon', function () {
-    $event = new SweetAlert2BroadcastEvent('channel', ['title' => 'Done!', 'toast' => true, 'icon' => 'success']);
+test('Swal::broadcast() dispatches SweetAlert2BroadcastEvent on a public channel', function () {
+    Swal::broadcast('my-channel', ['title' => 'Hello!']);
 
-    expect($event->broadcastWith())->toMatchArray(['toast' => true, 'icon' => 'success']);
+    expect($this->capturedEvent)->toBeInstanceOf(SweetAlert2BroadcastEvent::class);
+    expect($this->capturedEvent->broadcastOn())->toBeInstanceOf(Channel::class);
+    expect($this->capturedEvent->broadcastWith())->toBe(['title' => 'Hello!']);
 });
 
-test('Swal::broadcastPrivate() creates event on a PrivateChannel', function () {
-    $event = new SweetAlert2BroadcastEvent('user.42', ['title' => 'Hello'], private: true);
+test('Swal::broadcastSuccess() dispatches with success icon', function () {
+    Swal::broadcastSuccess('my-channel', ['title' => 'Done!']);
 
-    expect($event->broadcastOn())->toBeInstanceOf(PrivateChannel::class);
-    expect($event->broadcastWith())->toBe(['title' => 'Hello']);
+    expect($this->capturedEvent)->toBeInstanceOf(SweetAlert2BroadcastEvent::class);
+    expect($this->capturedEvent->broadcastWith())->toBe(['title' => 'Done!', 'icon' => 'success']);
+});
+
+test('Swal::broadcastError() dispatches with error icon', function () {
+    Swal::broadcastError('my-channel', ['title' => 'Oops!']);
+
+    expect($this->capturedEvent->broadcastWith())->toMatchArray(['icon' => 'error']);
+});
+
+test('Swal::broadcastWarning() dispatches with warning icon', function () {
+    Swal::broadcastWarning('my-channel', ['title' => 'Watch out!']);
+
+    expect($this->capturedEvent->broadcastWith())->toMatchArray(['icon' => 'warning']);
+});
+
+test('Swal::broadcastInfo() dispatches with info icon', function () {
+    Swal::broadcastInfo('my-channel', ['title' => 'FYI!']);
+
+    expect($this->capturedEvent->broadcastWith())->toMatchArray(['icon' => 'info']);
+});
+
+test('Swal::broadcastQuestion() dispatches with question icon', function () {
+    Swal::broadcastQuestion('my-channel', ['title' => 'Are you sure?']);
+
+    expect($this->capturedEvent->broadcastWith())->toMatchArray(['icon' => 'question']);
+});
+
+test('Swal::broadcastToast() dispatches with toast flag', function () {
+    Swal::broadcastToast('my-channel', ['title' => 'Toast!']);
+
+    expect($this->capturedEvent->broadcastWith())->toMatchArray(['toast' => true]);
+});
+
+test('Swal::broadcastToastSuccess() dispatches with toast and success icon', function () {
+    Swal::broadcastToastSuccess('my-channel', ['title' => 'Saved!']);
+
+    expect($this->capturedEvent->broadcastWith())->toMatchArray(['toast' => true, 'icon' => 'success']);
+});
+
+test('Swal::broadcastPrivate() dispatches SweetAlert2BroadcastEvent on a PrivateChannel', function () {
+    Swal::broadcastPrivate('user.42', ['title' => 'Hello!']);
+
+    expect($this->capturedEvent)->toBeInstanceOf(SweetAlert2BroadcastEvent::class);
+    expect($this->capturedEvent->broadcastOn())->toBeInstanceOf(PrivateChannel::class);
+    expect($this->capturedEvent->broadcastWith())->toBe(['title' => 'Hello!']);
+});
+
+test('Swal::broadcastPrivateSuccess() dispatches on a PrivateChannel with success icon', function () {
+    Swal::broadcastPrivateSuccess('user.42', ['title' => 'Done!']);
+
+    expect($this->capturedEvent->broadcastOn())->toBeInstanceOf(PrivateChannel::class);
+    expect($this->capturedEvent->broadcastWith())->toMatchArray(['icon' => 'success']);
+});
+
+test('Swal::broadcastPrivateToastSuccess() dispatches on a PrivateChannel with toast and success icon', function () {
+    Swal::broadcastPrivateToastSuccess('user.42', ['title' => 'Saved!']);
+
+    expect($this->capturedEvent->broadcastOn())->toBeInstanceOf(PrivateChannel::class);
+    expect($this->capturedEvent->broadcastWith())->toMatchArray(['toast' => true, 'icon' => 'success']);
 });
