@@ -233,7 +233,11 @@ class Swal
 
         foreach ($options as $key => $value) {
             if (in_array($key, self::CALLBACK_OPTIONS) && is_string($value)) {
-                $callbacks[$key] = $value;
+                if (self::isValidCallback($value)) {
+                    $callbacks[$key] = $value;
+                } else {
+                    $regularOptions[$key] = $value;
+                }
             } else {
                 $regularOptions[$key] = $value;
             }
@@ -300,5 +304,19 @@ class Swal
         $callback = preg_replace('/<\/(style)/i', '<\\/$1', $callback);
 
         return $callback;
+    }
+
+    /**
+     * Validates that callback expressions are function-like JavaScript expressions.
+     *
+     * This avoids evaluating arbitrary JavaScript expressions such as `alert(1)`,
+     * while still supporting common callback syntaxes used in SweetAlert2.
+     */
+    private static function isValidCallback(string $callback): bool
+    {
+        return preg_match(
+            '/^\s*(?:async\s+)?function\b|^\s*(?:async\s*)?\([^)]*\)\s*=>|^\s*(?:async\s*)?[A-Za-z_$][A-Za-z0-9_$]*\s*=>/',
+            $callback
+        ) === 1;
     }
 }

@@ -18,6 +18,9 @@
     }
   };
 
+  const isValidCallback = callback =>
+    /^\s*(?:async\s+)?function\b|^\s*(?:async\s*)?\([^)]*\)\s*=>|^\s*(?:async\s*)?[A-Za-z_$][A-Za-z0-9_$]*\s*=>/.test(callback);
+
   // Listen to Inertia navigation events
   document.addEventListener('inertia:navigate', async (event) => {
     const sweetalert2Data = event.detail.page.props.flash?.['{{ Swal::SESSION_KEY }}'];
@@ -31,6 +34,11 @@
       
       callbackOptions.forEach(callback => {
         if (typeof options[callback] === 'string') {
+          if (!isValidCallback(options[callback])) {
+            delete options[callback];
+            return;
+          }
+
           try {
             // Sanitize callback to prevent XSS (escape closing script/style tags)
             const sanitized = options[callback]
@@ -49,4 +57,3 @@
     }
   });
 </script>
-

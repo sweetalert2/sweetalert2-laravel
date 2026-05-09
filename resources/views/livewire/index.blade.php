@@ -18,6 +18,9 @@
     }
   };
 
+  const isValidCallback = callback =>
+    /^\s*(?:async\s+)?function\b|^\s*(?:async\s*)?\([^)]*\)\s*=>|^\s*(?:async\s*)?[A-Za-z_$][A-Za-z0-9_$]*\s*=>/.test(callback);
+
   @if(session()->has(Swal::SESSION_KEY))
     (async () => {
         window.Swal = await getSweetAlert2();
@@ -37,6 +40,11 @@
 
     callbackOptions.forEach(callback => {
       if (typeof options[callback] === 'string') {
+        if (!isValidCallback(options[callback])) {
+          delete options[callback];
+          return;
+        }
+
         try {
           // Sanitize callback to prevent XSS (escape closing script/style tags)
           const sanitized = options[callback]
@@ -54,4 +62,3 @@
     window.Swal.fire(options);
   });
 </script>
-
