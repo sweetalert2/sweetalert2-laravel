@@ -96,3 +96,12 @@ test('Swal::renderFireCall() keeps non-function callback strings JSON encoded', 
         ->toContain('"didOpen":"alert(\"XSS\")"')
         ->not->toContain('"didOpen": alert("XSS")');
 });
+
+test('Swal::renderFireCall() handles invalid UTF-8 in regular options', function () {
+    $result = Swal::renderFireCall([
+        'title' => "\xB11",
+    ]);
+
+    expect($result)
+        ->toContain('Swal.fire({"title":"\ufffd1"})');
+});
