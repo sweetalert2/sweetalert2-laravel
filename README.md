@@ -397,7 +397,7 @@ Swal::fire([
    - `inputValidator`
    - `inputOptions`
 
-3. **Callback limitations**: 
+3. **Callback limitations**:
    - You cannot use PHP variables directly in callback strings (use JavaScript variables or values from the alert instead)
    - Complex logic should be kept in JavaScript files and called from the callbacks
    - For advanced use cases, consider using the SweetAlert2 API directly in JavaScript
@@ -444,3 +444,7 @@ Swal::fire([
     }',
 ]);
 ```
+
+# Publishing to Packagist
+
+This package is published to [Packagist](https://packagist.org/packages/sweetalert2/laravel) automatically via a [GitHub webhook](https://packagist.org/about#how-to-update-packages). When a new release is tagged on GitHub, Packagist is notified and updates the package index automatically.
