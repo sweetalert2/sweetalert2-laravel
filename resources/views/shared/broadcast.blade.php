@@ -37,31 +37,33 @@
       }
       window.Swal = window.Swal || await getSweetAlert2();
 
+      const swalOptions = { ...options };
+
       // Handle callbacks in broadcast events
       const callbackOptions = @json(Swal::CALLBACK_OPTIONS);
 
       callbackOptions.forEach(callback => {
-        if (typeof options[callback] === 'string') {
-          if (!isValidCallback(options[callback])) {
-            delete options[callback];
+        if (typeof swalOptions[callback] === 'string') {
+          if (!isValidCallback(swalOptions[callback])) {
+            delete swalOptions[callback];
             return;
           }
 
           try {
             // Sanitize callback to prevent XSS (escape closing script/style tags)
-            const sanitized = options[callback]
+            const sanitized = swalOptions[callback]
               .replace(/<\/script/gi, '<\\/script')
               .replace(/<\/style/gi, '<\\/style');
             // Convert string to function (only for callbacks set by PHP backend, not user input)
-            options[callback] = new Function('return ' + sanitized)();
+            swalOptions[callback] = new Function('return ' + sanitized)();
           } catch (e) {
             console.error(`Failed to parse ${callback} callback:`, e);
-            delete options[callback];
+            delete swalOptions[callback];
           }
         }
       });
 
-      window.Swal.fire(options);
+      window.Swal.fire(swalOptions);
     });
   }
 </script>
