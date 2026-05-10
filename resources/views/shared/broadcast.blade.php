@@ -25,9 +25,11 @@
   if (!window.Echo) {
     console.warn('SweetAlert2 broadcast: window.Echo is not defined. Make sure Laravel Echo is configured to receive broadcast notifications.');
   } else {
-    const echoChannel = @json($isPrivate)
-      ? window.Echo.private(@json($channel))
-      : window.Echo.channel(@json($channel));
+    @if ($isPrivate)
+    const echoChannel = window.Echo.private(@json($channel));
+    @else
+    const echoChannel = window.Echo.channel(@json($channel));
+    @endif
 
     echoChannel.listen(@json('.' . Swal::SESSION_KEY), async (options) => {
       if (!options || typeof options !== 'object') {
