@@ -101,12 +101,30 @@ test('broadcast view includes SweetAlert2 CDN loader', function () {
 function bindRecordingBroadcaster(object $test): void
 {
     app()->bind('Illuminate\Contracts\Broadcasting\Factory', function () use ($test) {
-        return new class($test) {
-            public function __construct(private object $test) {}
+        // A no-op event dispatcher so PendingBroadcast::__destruct() does nothing real.
+        $noOpDispatcher = new class implements \Illuminate\Contracts\Events\Dispatcher {
+            public function listen($events, $listener = null) {}
+            public function hasListeners($eventName) { return false; }
+            public function subscribe($subscriber) {}
+            public function until($event, $payload = []) { return null; }
+            public function dispatch($event, $payload = [], $halt = false) { return null; }
+            public function push($event, $payload = []) {}
+            public function flush($event) {}
+            public function forget($event) {}
+            public function forgetPushed() {}
+        };
 
-            public function event(mixed $event): void
+        return new class($test, $noOpDispatcher) {
+            public function __construct(
+                private object $test,
+                private \Illuminate\Contracts\Events\Dispatcher $dispatcher,
+            ) {}
+
+            // event() MUST return PendingBroadcast — broadcast() has that strict return type.
+            public function event(mixed $event): \Illuminate\Broadcasting\PendingBroadcast
             {
                 $this->test->capturedEvent = $event;
+                return new \Illuminate\Broadcasting\PendingBroadcast($this->dispatcher, $event);
             }
 
             // Stub methods required by the BroadcastFactory contract
