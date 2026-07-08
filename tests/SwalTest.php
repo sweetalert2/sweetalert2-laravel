@@ -183,3 +183,13 @@ test('Swal::fire() with multiple callbacks', function () {
         ->assertSee('"didOpen": () => { console.log("opened"); }', escape: false)
         ->assertSee('"willClose": () => { console.log("closing"); }', escape: false);
 });
+
+test('Swal::fire() is only shown once (flash behavior)', function () {
+    Swal::fire(['title' => 'One-time alert', 'icon' => 'success']);
+
+    // First request: alert should be visible
+    $this->get('/')->assertSee('Swal.fire(', escape: false);
+
+    // Second request: alert must not be shown again
+    $this->get('/')->assertDontSee('Swal.fire(', escape: false);
+});
