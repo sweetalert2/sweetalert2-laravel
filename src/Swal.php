@@ -221,6 +221,400 @@ class Swal
         self::fire([...$options, 'toast' => true, 'icon' => 'question']);
     }
 
+    /* Broadcasting Functions */
+
+    /**
+     * Broadcasts a SweetAlert2 popup to a public Laravel broadcasting channel in real time.
+     *
+     * Requires Laravel Echo to be configured on the frontend.
+     * Include `@include('sweetalert2::broadcast', ['channel' => 'my-channel'])` in your layout.
+     *
+     * Example usage:
+     * <code>
+     *     Swal::broadcast('my-channel', ['title' => 'Done!', 'icon' => 'success']);
+     * </code>
+     *
+     * @param  string  $channel  The public broadcasting channel name.
+     * @param  array  $options  Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
+     */
+    public static function broadcast(string $channel, array $options = []): void
+    {
+        broadcast(new Events\SweetAlert2BroadcastEvent($channel, $options));
+    }
+
+    /**
+     * Broadcasts a SweetAlert2 popup to a public broadcasting channel with a success icon.
+     *
+     * Example usage:
+     * <code>
+     *     Swal::broadcastSuccess('my-channel', ['title' => 'Done!']);
+     * </code>
+     *
+     * @param  string  $channel  The public broadcasting channel name.
+     * @param  array  $options  Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
+     */
+    public static function broadcastSuccess(string $channel, array $options = []): void
+    {
+        self::broadcast($channel, [...$options, 'icon' => 'success']);
+    }
+
+    /**
+     * Broadcasts a SweetAlert2 popup to a public broadcasting channel with an error icon.
+     *
+     * Example usage:
+     * <code>
+     *     Swal::broadcastError('my-channel', ['title' => 'Oops!']);
+     * </code>
+     *
+     * @param  string  $channel  The public broadcasting channel name.
+     * @param  array  $options  Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
+     */
+    public static function broadcastError(string $channel, array $options = []): void
+    {
+        self::broadcast($channel, [...$options, 'icon' => 'error']);
+    }
+
+    /**
+     * Broadcasts a SweetAlert2 popup to a public broadcasting channel with a warning icon.
+     *
+     * Example usage:
+     * <code>
+     *     Swal::broadcastWarning('my-channel', ['title' => 'Watch out!']);
+     * </code>
+     *
+     * @param  string  $channel  The public broadcasting channel name.
+     * @param  array  $options  Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
+     */
+    public static function broadcastWarning(string $channel, array $options = []): void
+    {
+        self::broadcast($channel, [...$options, 'icon' => 'warning']);
+    }
+
+    /**
+     * Broadcasts a SweetAlert2 popup to a public broadcasting channel with an info icon.
+     *
+     * Example usage:
+     * <code>
+     *     Swal::broadcastInfo('my-channel', ['title' => 'FYI!']);
+     * </code>
+     *
+     * @param  string  $channel  The public broadcasting channel name.
+     * @param  array  $options  Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
+     */
+    public static function broadcastInfo(string $channel, array $options = []): void
+    {
+        self::broadcast($channel, [...$options, 'icon' => 'info']);
+    }
+
+    /**
+     * Broadcasts a SweetAlert2 popup to a public broadcasting channel with a question icon.
+     *
+     * Example usage:
+     * <code>
+     *     Swal::broadcastQuestion('my-channel', ['title' => 'Are you sure?']);
+     * </code>
+     *
+     * @param  string  $channel  The public broadcasting channel name.
+     * @param  array  $options  Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
+     */
+    public static function broadcastQuestion(string $channel, array $options = []): void
+    {
+        self::broadcast($channel, [...$options, 'icon' => 'question']);
+    }
+
+    /**
+     * Broadcasts a SweetAlert2 toast to a public broadcasting channel.
+     *
+     * Example usage:
+     * <code>
+     *     Swal::broadcastToast('my-channel', ['title' => 'Hello!', 'icon' => 'success']);
+     * </code>
+     *
+     * @param  string  $channel  The public broadcasting channel name.
+     * @param  array  $options  Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
+     */
+    public static function broadcastToast(string $channel, array $options = []): void
+    {
+        self::broadcast($channel, [...$options, 'toast' => true]);
+    }
+
+    /**
+     * Broadcasts a SweetAlert2 toast to a public broadcasting channel with a success icon.
+     *
+     * Example usage:
+     * <code>
+     *     Swal::broadcastToastSuccess('my-channel', ['title' => 'Saved!']);
+     * </code>
+     *
+     * @param  string  $channel  The public broadcasting channel name.
+     * @param  array  $options  Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
+     */
+    public static function broadcastToastSuccess(string $channel, array $options = []): void
+    {
+        self::broadcast($channel, [...$options, 'toast' => true, 'icon' => 'success']);
+    }
+
+    /**
+     * Broadcasts a SweetAlert2 toast to a public broadcasting channel with an error icon.
+     *
+     * Example usage:
+     * <code>
+     *     Swal::broadcastToastError('my-channel', ['title' => 'Failed!']);
+     * </code>
+     *
+     * @param  string  $channel  The public broadcasting channel name.
+     * @param  array  $options  Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
+     */
+    public static function broadcastToastError(string $channel, array $options = []): void
+    {
+        self::broadcast($channel, [...$options, 'toast' => true, 'icon' => 'error']);
+    }
+
+    /**
+     * Broadcasts a SweetAlert2 toast to a public broadcasting channel with a warning icon.
+     *
+     * Example usage:
+     * <code>
+     *     Swal::broadcastToastWarning('my-channel', ['title' => 'Warning!']);
+     * </code>
+     *
+     * @param  string  $channel  The public broadcasting channel name.
+     * @param  array  $options  Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
+     */
+    public static function broadcastToastWarning(string $channel, array $options = []): void
+    {
+        self::broadcast($channel, [...$options, 'toast' => true, 'icon' => 'warning']);
+    }
+
+    /**
+     * Broadcasts a SweetAlert2 toast to a public broadcasting channel with an info icon.
+     *
+     * Example usage:
+     * <code>
+     *     Swal::broadcastToastInfo('my-channel', ['title' => 'Info!']);
+     * </code>
+     *
+     * @param  string  $channel  The public broadcasting channel name.
+     * @param  array  $options  Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
+     */
+    public static function broadcastToastInfo(string $channel, array $options = []): void
+    {
+        self::broadcast($channel, [...$options, 'toast' => true, 'icon' => 'info']);
+    }
+
+    /**
+     * Broadcasts a SweetAlert2 toast to a public broadcasting channel with a question icon.
+     *
+     * Example usage:
+     * <code>
+     *     Swal::broadcastToastQuestion('my-channel', ['title' => 'Question?']);
+     * </code>
+     *
+     * @param  string  $channel  The public broadcasting channel name.
+     * @param  array  $options  Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
+     */
+    public static function broadcastToastQuestion(string $channel, array $options = []): void
+    {
+        self::broadcast($channel, [...$options, 'toast' => true, 'icon' => 'question']);
+    }
+
+    /* Private Broadcasting Functions */
+
+    /**
+     * Broadcasts a SweetAlert2 popup to a private Laravel broadcasting channel in real time.
+     *
+     * Requires Laravel Echo to be configured on the frontend.
+     * Include `@include('sweetalert2::broadcast', ['channel' => 'user.1', 'private' => true])` in your layout.
+     *
+     * Example usage:
+     * <code>
+     *     Swal::broadcastPrivate('user.' . $user->id, ['title' => 'Done!', 'icon' => 'success']);
+     * </code>
+     *
+     * @param  string  $channel  The private broadcasting channel name (without the `private-` prefix).
+     * @param  array  $options  Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
+     */
+    public static function broadcastPrivate(string $channel, array $options = []): void
+    {
+        broadcast(new Events\SweetAlert2BroadcastEvent($channel, $options, private: true));
+    }
+
+    /**
+     * Broadcasts a SweetAlert2 popup to a private broadcasting channel with a success icon.
+     *
+     * Example usage:
+     * <code>
+     *     Swal::broadcastPrivateSuccess('user.' . $user->id, ['title' => 'Done!']);
+     * </code>
+     *
+     * @param  string  $channel  The private broadcasting channel name.
+     * @param  array  $options  Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
+     */
+    public static function broadcastPrivateSuccess(string $channel, array $options = []): void
+    {
+        self::broadcastPrivate($channel, [...$options, 'icon' => 'success']);
+    }
+
+    /**
+     * Broadcasts a SweetAlert2 popup to a private broadcasting channel with an error icon.
+     *
+     * Example usage:
+     * <code>
+     *     Swal::broadcastPrivateError('user.' . $user->id, ['title' => 'Oops!']);
+     * </code>
+     *
+     * @param  string  $channel  The private broadcasting channel name.
+     * @param  array  $options  Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
+     */
+    public static function broadcastPrivateError(string $channel, array $options = []): void
+    {
+        self::broadcastPrivate($channel, [...$options, 'icon' => 'error']);
+    }
+
+    /**
+     * Broadcasts a SweetAlert2 popup to a private broadcasting channel with a warning icon.
+     *
+     * Example usage:
+     * <code>
+     *     Swal::broadcastPrivateWarning('user.' . $user->id, ['title' => 'Watch out!']);
+     * </code>
+     *
+     * @param  string  $channel  The private broadcasting channel name.
+     * @param  array  $options  Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
+     */
+    public static function broadcastPrivateWarning(string $channel, array $options = []): void
+    {
+        self::broadcastPrivate($channel, [...$options, 'icon' => 'warning']);
+    }
+
+    /**
+     * Broadcasts a SweetAlert2 popup to a private broadcasting channel with an info icon.
+     *
+     * Example usage:
+     * <code>
+     *     Swal::broadcastPrivateInfo('user.' . $user->id, ['title' => 'FYI!']);
+     * </code>
+     *
+     * @param  string  $channel  The private broadcasting channel name.
+     * @param  array  $options  Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
+     */
+    public static function broadcastPrivateInfo(string $channel, array $options = []): void
+    {
+        self::broadcastPrivate($channel, [...$options, 'icon' => 'info']);
+    }
+
+    /**
+     * Broadcasts a SweetAlert2 popup to a private broadcasting channel with a question icon.
+     *
+     * Example usage:
+     * <code>
+     *     Swal::broadcastPrivateQuestion('user.' . $user->id, ['title' => 'Are you sure?']);
+     * </code>
+     *
+     * @param  string  $channel  The private broadcasting channel name.
+     * @param  array  $options  Optional configuration parameters to customize the popup {@see https://sweetalert2.github.io/#configuration}.
+     */
+    public static function broadcastPrivateQuestion(string $channel, array $options = []): void
+    {
+        self::broadcastPrivate($channel, [...$options, 'icon' => 'question']);
+    }
+
+    /**
+     * Broadcasts a SweetAlert2 toast to a private broadcasting channel.
+     *
+     * Example usage:
+     * <code>
+     *     Swal::broadcastPrivateToast('user.' . $user->id, ['title' => 'Hello!', 'icon' => 'success']);
+     * </code>
+     *
+     * @param  string  $channel  The private broadcasting channel name.
+     * @param  array  $options  Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
+     */
+    public static function broadcastPrivateToast(string $channel, array $options = []): void
+    {
+        self::broadcastPrivate($channel, [...$options, 'toast' => true]);
+    }
+
+    /**
+     * Broadcasts a SweetAlert2 toast to a private broadcasting channel with a success icon.
+     *
+     * Example usage:
+     * <code>
+     *     Swal::broadcastPrivateToastSuccess('user.' . $user->id, ['title' => 'Saved!']);
+     * </code>
+     *
+     * @param  string  $channel  The private broadcasting channel name.
+     * @param  array  $options  Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
+     */
+    public static function broadcastPrivateToastSuccess(string $channel, array $options = []): void
+    {
+        self::broadcastPrivate($channel, [...$options, 'toast' => true, 'icon' => 'success']);
+    }
+
+    /**
+     * Broadcasts a SweetAlert2 toast to a private broadcasting channel with an error icon.
+     *
+     * Example usage:
+     * <code>
+     *     Swal::broadcastPrivateToastError('user.' . $user->id, ['title' => 'Failed!']);
+     * </code>
+     *
+     * @param  string  $channel  The private broadcasting channel name.
+     * @param  array  $options  Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
+     */
+    public static function broadcastPrivateToastError(string $channel, array $options = []): void
+    {
+        self::broadcastPrivate($channel, [...$options, 'toast' => true, 'icon' => 'error']);
+    }
+
+    /**
+     * Broadcasts a SweetAlert2 toast to a private broadcasting channel with a warning icon.
+     *
+     * Example usage:
+     * <code>
+     *     Swal::broadcastPrivateToastWarning('user.' . $user->id, ['title' => 'Warning!']);
+     * </code>
+     *
+     * @param  string  $channel  The private broadcasting channel name.
+     * @param  array  $options  Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
+     */
+    public static function broadcastPrivateToastWarning(string $channel, array $options = []): void
+    {
+        self::broadcastPrivate($channel, [...$options, 'toast' => true, 'icon' => 'warning']);
+    }
+
+    /**
+     * Broadcasts a SweetAlert2 toast to a private broadcasting channel with an info icon.
+     *
+     * Example usage:
+     * <code>
+     *     Swal::broadcastPrivateToastInfo('user.' . $user->id, ['title' => 'Info!']);
+     * </code>
+     *
+     * @param  string  $channel  The private broadcasting channel name.
+     * @param  array  $options  Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
+     */
+    public static function broadcastPrivateToastInfo(string $channel, array $options = []): void
+    {
+        self::broadcastPrivate($channel, [...$options, 'toast' => true, 'icon' => 'info']);
+    }
+
+    /**
+     * Broadcasts a SweetAlert2 toast to a private broadcasting channel with a question icon.
+     *
+     * Example usage:
+     * <code>
+     *     Swal::broadcastPrivateToastQuestion('user.' . $user->id, ['title' => 'Question?']);
+     * </code>
+     *
+     * @param  string  $channel  The private broadcasting channel name.
+     * @param  array  $options  Optional configuration parameters to customize the toast {@see https://sweetalert2.github.io/#configuration}.
+     */
+    public static function broadcastPrivateToastQuestion(string $channel, array $options = []): void
+    {
+        self::broadcastPrivate($channel, [...$options, 'toast' => true, 'icon' => 'question']);
+    }
+
     /**
      * Separates callback options from regular options.
      * Callbacks will be stored with a special marker to be rendered as JavaScript functions.

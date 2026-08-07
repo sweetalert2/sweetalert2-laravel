@@ -204,6 +204,92 @@ $this->swalFire([
 ]);
 ```
 
+## Broadcasting (Reverb, Pusher, Ably)
+
+You can use `Swal::broadcast()` or `Swal::broadcastPrivate()` to show real-time SweetAlert2 popups without a page reload, using [Laravel's broadcasting system](https://laravel.com/docs/broadcasting) (Reverb, Pusher, Ably, etc.).
+
+This is ideal for backend actions that don't navigate away from the page, such as sending a password reset email from a dashboard, completing a background job, or any server-side event you want to surface to the user in real time.
+
+### Setup
+
+First, [configure Laravel broadcasting](https://laravel.com/docs/broadcasting#server-side-installation) in your application and install [Laravel Echo](https://laravel.com/docs/broadcasting#client-side-installation) on the frontend.
+
+Then include the SweetAlert2 broadcast listener in your layout, specifying which channel to listen on:
+
+```blade
+{{-- Listen on a public channel --}}
+@include('sweetalert2::broadcast', ['channel' => 'my-channel'])
+
+{{-- Listen on a private channel (e.g. per-user notifications) --}}
+@include('sweetalert2::broadcast', ['channel' => 'user.' . auth()->id(), 'private' => true])
+```
+
+The listener requires `window.Echo` (Laravel Echo) to be available on the page.
+
+### Usage
+
+#### Public channels
+
+```php
+use SweetAlert2\Laravel\Swal;
+
+// same options as Swal::fire()
+Swal::broadcast('my-channel', [
+    'title' => 'Email sent!',
+    'icon'  => 'success',
+]);
+```
+
+#### Private channels
+
+```php
+use SweetAlert2\Laravel\Swal;
+
+// Broadcast only to a specific user
+Swal::broadcastPrivate('user.' . $user->id, [
+    'title' => 'Your password reset email has been sent.',
+    'icon'  => 'info',
+]);
+```
+
+### Helpers
+
+Available broadcasting helper methods for **public channels**:
+
+```php
+Swal::broadcastSuccess('my-channel', ['title' => 'Popup with a success icon']);
+Swal::broadcastError('my-channel', ['title' => 'Popup with an error icon']);
+Swal::broadcastWarning('my-channel', ['title' => 'Popup with a warning icon']);
+Swal::broadcastInfo('my-channel', ['title' => 'Popup with an info icon']);
+Swal::broadcastQuestion('my-channel', ['title' => 'Popup with a question icon']);
+
+// or a toast
+Swal::broadcastToast('my-channel', ['title' => 'Toast', 'icon' => 'success']);
+Swal::broadcastToastSuccess('my-channel', ['title' => 'Toast with a success icon']);
+Swal::broadcastToastError('my-channel', ['title' => 'Toast with an error icon']);
+Swal::broadcastToastWarning('my-channel', ['title' => 'Toast with a warning icon']);
+Swal::broadcastToastInfo('my-channel', ['title' => 'Toast with an info icon']);
+Swal::broadcastToastQuestion('my-channel', ['title' => 'Toast with a question icon']);
+```
+
+Available broadcasting helper methods for **private channels**:
+
+```php
+Swal::broadcastPrivateSuccess('user.' . $id, ['title' => 'Popup with a success icon']);
+Swal::broadcastPrivateError('user.' . $id, ['title' => 'Popup with an error icon']);
+Swal::broadcastPrivateWarning('user.' . $id, ['title' => 'Popup with a warning icon']);
+Swal::broadcastPrivateInfo('user.' . $id, ['title' => 'Popup with an info icon']);
+Swal::broadcastPrivateQuestion('user.' . $id, ['title' => 'Popup with a question icon']);
+
+// or a toast
+Swal::broadcastPrivateToast('user.' . $id, ['title' => 'Toast', 'icon' => 'success']);
+Swal::broadcastPrivateToastSuccess('user.' . $id, ['title' => 'Toast with a success icon']);
+Swal::broadcastPrivateToastError('user.' . $id, ['title' => 'Toast with an error icon']);
+Swal::broadcastPrivateToastWarning('user.' . $id, ['title' => 'Toast with a warning icon']);
+Swal::broadcastPrivateToastInfo('user.' . $id, ['title' => 'Toast with an info icon']);
+Swal::broadcastPrivateToastQuestion('user.' . $id, ['title' => 'Toast with a question icon']);
+```
+
 ## Inertia.js
 
 You can use `Swal::fire()` or any of the available helper methods in your Inertia.js controllers to show popups after navigation:
@@ -361,6 +447,14 @@ public function boot()
 3. The blade partial template listens for Inertia navigation events and renders the SweetAlert2 popup.
 
 This works after Inertia page navigations (redirects, visits, etc.).
+
+### Broadcasting (Reverb, Pusher, Ably)
+
+1. The `Swal::broadcast()` or `Swal::broadcastPrivate()` method dispatches a `SweetAlert2BroadcastEvent` via Laravel's broadcasting system.
+2. The broadcast listener partial (`@include('sweetalert2::broadcast', [...])`) uses Laravel Echo to subscribe to the specified channel and listens for the `sweetalert2-message` event.
+3. When the event is received, the broadcast listener renders the SweetAlert2 popup in real time — no page reload required.
+
+This works for any backend action that shouldn't navigate the user away from the current page.
 
 ## 3. How is the SweetAlert2 JavaScript library loaded?
 
